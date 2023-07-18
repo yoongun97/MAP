@@ -78,6 +78,17 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const signUp = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log(userCredential);
+      alert('가입되었습니다.');
+      closeModal();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user); // 사용자 인증 정보가 변경될 때마다 해당 이벤트를 받아 처리합니다.
@@ -125,17 +136,7 @@ function SignUp() {
           </p>
 
           <StModalBtns>
-            <StModalBtn
-              backgroundColor="#474688"
-              onClick={async () => {
-                try {
-                  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                  console.log(userCredential);
-                } catch (error) {
-                  console.error(error);
-                }
-              }}
-            >
+            <StModalBtn backgroundColor="#474688" onClick={signUp}>
               회원가입
             </StModalBtn>
             <StModalBtn backgroundColor="#F55150" onClick={closeModal}>

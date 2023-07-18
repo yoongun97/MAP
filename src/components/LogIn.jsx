@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from 'styled-components';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
 
 const StHeaderBtn = styled.button`
   background-color: transparent;
@@ -79,17 +81,33 @@ const StSNSBtn = styled.img`
 function LogIn() {
   const [isModal1Open, setIsModal1Open] = useState(false);
 
-  const openModal1 = () => {
+  const openModal = () => {
     setIsModal1Open(true);
   };
 
-  const closeModal1 = () => {
+  const closeModal = () => {
     setIsModal1Open(false);
+  };
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const signIn = async (event) => {
+    event.preventDefault();
+    console.log('click signIn'); // 로그 확인을 위해 추가
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log(userCredential);
+      alert('로그인 되었습니다.');
+      closeModal();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
-      <StHeaderBtn onClick={openModal1}>로그인</StHeaderBtn>
+      <StHeaderBtn onClick={openModal}>로그인</StHeaderBtn>
       {isModal1Open && (
         <StModal>
           <StModalTitle>
@@ -98,16 +116,29 @@ function LogIn() {
           </StModalTitle>
 
           <StModalSubTitle>이메일</StModalSubTitle>
-          <StModalInput></StModalInput>
+          <StModalInput
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          ></StModalInput>
 
           <StModalSubTitle>비밀번호</StModalSubTitle>
-          <StModalInput style={{ marginBottom: 0 }}></StModalInput>
+          <StModalInput
+            style={{ marginBottom: 0 }}
+            type="password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          ></StModalInput>
 
           <p style={{ fontSize: '12px', marginLeft: '30px', marginRight: 'auto', color: 'red' }}>
             비밀번호가 일치하지 않습니다.
           </p>
 
-          <StModalBtn backgroundColor="#474688" onClick={closeModal1}>
+          <StModalBtn backgroundColor="#474688" onClick={signIn}>
             로그인
           </StModalBtn>
           <StSNSContainer>
