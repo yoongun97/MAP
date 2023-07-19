@@ -21,8 +21,11 @@ import {
 function LogIn({ openModal, closeModal, isLogInOpen }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
   // const [join, setJoin] = useState('회원가입');
 
+  //모달 여닫기
   const openLogInModal = () => {
     openModal();
   };
@@ -33,6 +36,7 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
     setPassword('');
   };
 
+  // 로그인 버튼 클릭 시 이벤트
   const signIn = async (event) => {
     event.preventDefault();
     console.log('click signIn'); // 로그 확인을 위해 추가
@@ -43,7 +47,18 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
       closeLogInModal();
     } catch (error) {
       console.error(error);
+      setErrorMessage('이메일 또는 비밀번호가 잘못되었습니다.');
     }
+  };
+
+  // email input
+  const emailChangeHandler = (event) => {
+    setEmail(event.target.value);
+  };
+
+  // password input
+  const passwordChangeHandler = (event) => {
+    setPassword(event.target.value);
   };
 
   // useEffect(() => {
@@ -63,25 +78,17 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
           </StModalTitle>
 
           <StModalSubTitle>이메일</StModalSubTitle>
-          <StModalInput
-            type="email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-          ></StModalInput>
+          <StModalInput type="email" value={email} onChange={emailChangeHandler}></StModalInput>
 
           <StModalSubTitle>비밀번호</StModalSubTitle>
           <StModalInput
             style={{ marginBottom: 0 }}
             type="password"
             value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            onChange={passwordChangeHandler}
           ></StModalInput>
 
-          <StWarnMent>비밀번호가 일치하지 않습니다.</StWarnMent>
+          <StWarnMent>{errorMessage}</StWarnMent>
           <StModalBtns>
             <StModalBtn backgroundColor="#474688" onClick={signIn}>
               로그인
