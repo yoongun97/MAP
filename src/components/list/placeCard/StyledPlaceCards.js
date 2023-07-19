@@ -5,7 +5,7 @@ export const L = {
     width: 80%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(225px, 1fr));
     grid-gap: 40px 20px;
     align-items: center;
     .card-container {
@@ -42,6 +42,7 @@ export const L = {
           flex-direction: column;
           justify-content: center;
           width: 70%;
+          font-size: 1.8vh;
           p {
             margin-top: 10px;
             font-size: 0.8em;
@@ -50,8 +51,9 @@ export const L = {
         .like-box {
           display: flex;
           flex-direction: column;
+          justify-content: center;
           svg {
-            margin: 10px;
+            margin: 5px;
             transition: transform 0.3s ease;
             &:hover {
               transform: scale(1.1);
