@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import likes from '../module/likes';
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    likes
+  },
   devTools: process.env.NODE_ENV !== 'production'
 });
 
