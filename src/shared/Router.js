@@ -12,8 +12,8 @@ function Router() {
     <>
       {/* <Header /> */}
       <Routes>
+        <Route path="/" element={<Main />} />
         <Route element={<Layout />}>
-          <Route path="/" element={<Main />} />
           <Route path="/feat/likes" element={<Likes />} />
           <Route path="/Detail" element={<DetailPage />} />
           <Route path="/mypage" element={<MyPage />} />
