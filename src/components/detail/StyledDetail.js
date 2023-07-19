@@ -28,10 +28,6 @@ export const spotCard = styled.li`
   backdrop-filter: blur(4px);
   background: rgba(31, 38, 135, 0.1);
   border-radius: 4px;
-  border-width: initial !important;
-  border-style: none !important;
-  border-color: initial !important;
-  border-image: initial !important;
   margin: 16px 8px !important;
   display: flex;
   position: relative;
