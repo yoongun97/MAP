@@ -72,7 +72,7 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
     // 사용자의 로그인 상태 변경 감지
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setCurrentUser(user); // 로그인된 사용자의 닉네임을 설정
+        setCurrentUser(user); // 로그인된 사용자의 데이터 설정정
       } else {
         setCurrentUser(null); // 로그인되지 않은 상태면 null로 설정
       }
@@ -80,6 +80,13 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
 
     return () => unsubscribe(); // 컴포넌트 언마운트 시 이벤트 구독 해제
   }, []);
+
+  // Enter 키 입력 감지
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      signIn(event);
+    }
+  };
 
   return (
     <>
@@ -104,6 +111,7 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
             type="password"
             value={password}
             onChange={passwordChangeHandler}
+            onKeyDown={handleKeyDown}
           ></StModalInput>
 
           <StWarnMent>{errorMessage}</StWarnMent>
