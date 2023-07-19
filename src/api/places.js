@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, getDoc, getDocs, doc, where, query } from 'firebase/firestore';
+import { collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const getPlaceData = async () => {
