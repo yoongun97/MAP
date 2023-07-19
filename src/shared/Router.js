@@ -1,15 +1,15 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Main from '../pages/Main';
-import Likes from '../components/like/Likes';
 import DetailPage from '../pages/DetailPage';
+import ListPage from '../pages/ListPage';
 function Router() {
   return (
     <>
       {/* <Header /> */}
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/feat/likes" element={<Likes />} />
+        <Route path="/list" element={<ListPage />} />
         <Route path="/Detail" element={<DetailPage />} />
       </Routes>
     </>
