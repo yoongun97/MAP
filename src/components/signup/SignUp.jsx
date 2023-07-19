@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
-import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, updateProfile } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
+  updateProfile,
+  onAuthStateChanged
+} from 'firebase/auth';
 import {
   StHeaderBtn,
   StModal,
@@ -24,6 +29,7 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
   const [passwordverify, setPasswordVerify] = useState(true);
   const [passwordMatch, setPasswordMatch] = useState(true); // 비밀번호 일치 여부 상태 추가
   const [showPasswordMismatch, setShowPasswordMismatch] = useState(false); // 비밀번호 불일치 메시지 표시 여부 상태 추가
+  const [currentUser, setCurrentUser] = useState(null); // 현재 로그인된 사용자 닉네임 상태 추가
 
   // 모달 여닫기
   const openSignUpModal = () => {
@@ -119,16 +125,6 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
     }
 
     try {
-      // const user = auth.currentUser;
-      // if (user) {
-      //   // 현재 사용자의 닉네임을 변경할 경우, 자기 자신을 제외하고 중복 확인
-      //   const { displayName } = user;
-      //   if (displayName === nickname) {
-      //     alert('사용 가능한 닉네임입니다!');
-      //     return;
-      //   }
-      // }
-
       // 닉네임이 이미 존재하는지 확인
       const domain = 'firebaseapp.com'; // Firebase Authentication에서 사용하는 도메인
       const email = `${nickname}@${domain}`;
@@ -147,9 +143,28 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
     }
   };
 
+  useEffect(() => {
+    // 사용자의 로그인 상태 변경 감지
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user.displayName); // 로그인된 사용자의 닉네임을 설정
+      } else {
+        setCurrentUser(null); // 로그인되지 않은 상태면 null로 설정
+      }
+    });
+
+    return () => unsubscribe(); // 컴포넌트 언마운트 시 이벤트 구독 해제
+  }, []);
+
   return (
     <>
-      <StHeaderBtn onClick={openSignUpModal}>회원가입</StHeaderBtn>
+      {currentUser ? (
+        // 로그인된 사용자 닉네임이 있으면 표시
+        <StHeaderBtn>{currentUser}</StHeaderBtn>
+      ) : (
+        // 로그인되지 않은 경우 회원가입 버튼 표시
+        <StHeaderBtn onClick={openSignUpModal}>회원가입</StHeaderBtn>
+      )}
       {isSignUpOpen && (
         <StModal>
           <StModalTitle>

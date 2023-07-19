@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useState, useEffect } from 'react';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../firebase';
 import {
   StHeaderBtn,
@@ -22,8 +22,7 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  // const [join, setJoin] = useState('회원가입');
+  const [currentUser, setCurrentUser] = useState(null);
 
   //모달 여닫기
   const openLogInModal = () => {
@@ -34,6 +33,7 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
     closeModal();
     setEmail('');
     setPassword('');
+    setErrorMessage('');
   };
 
   // 로그인 버튼 클릭 시 이벤트
@@ -44,11 +44,18 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
       alert('로그인 되었습니다.');
+
       closeLogInModal();
     } catch (error) {
       console.error(error);
       setErrorMessage('이메일 또는 비밀번호가 잘못되었습니다.');
     }
+  };
+
+  // 로그아웃 버튼 클릭 시 이벤트
+  const signOutHandler = async () => {
+    alert('로그아웃 하시겠습니까?');
+    await signOut(auth);
   };
 
   // email input
@@ -61,15 +68,26 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
     setPassword(event.target.value);
   };
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     return !auth.currentUser ? setJoin('회원가입') : setJoin('닉네임');
-  //   });
-  // }, [auth]);
+  useEffect(() => {
+    // 사용자의 로그인 상태 변경 감지
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user); // 로그인된 사용자의 닉네임을 설정
+      } else {
+        setCurrentUser(null); // 로그인되지 않은 상태면 null로 설정
+      }
+    });
+
+    return () => unsubscribe(); // 컴포넌트 언마운트 시 이벤트 구독 해제
+  }, []);
 
   return (
     <>
-      <StHeaderBtn onClick={openLogInModal}>로그인</StHeaderBtn>
+      {currentUser ? (
+        <StHeaderBtn onClick={signOutHandler}>로그아웃</StHeaderBtn>
+      ) : (
+        <StHeaderBtn onClick={openLogInModal}>로그인</StHeaderBtn>
+      )}
       {isLogInOpen && (
         <StModal>
           <StModalTitle>

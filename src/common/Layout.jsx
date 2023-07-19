@@ -77,8 +77,8 @@ function Layout() {
             gap: '12px'
           }}
         >
-          <SignUp openModal={openSignUpModal} closeModal={closeModal} isSignUpOpen={isSignUpOpen} />
           <LogIn openModal={openLogInModal} closeModal={closeModal} isLogInOpen={isLogInOpen} />
+          <SignUp openModal={openSignUpModal} closeModal={closeModal} isSignUpOpen={isSignUpOpen} />
         </div>
       </StHeader>
       <Outlet />
