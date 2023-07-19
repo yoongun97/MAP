@@ -1,96 +1,37 @@
 import React, { useState } from 'react';
-import { styled } from 'styled-components';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth } from '../../firebase';
+import {
+  StHeaderBtn,
+  StModal,
+  StModalTitle,
+  StModalSubTitle,
+  StModalInput,
+  StModalBtn,
+  StSNSContainer,
+  StSNSBtn,
+  StSNSBtns,
+  StModalTitleL,
+  StModalTitleS,
+  StWarnMent,
+  StSNSTitle,
+  StModalBtns
+} from './StyledLogIn';
 
-const StHeaderBtn = styled.button`
-  background-color: transparent;
-  border: none;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-`;
-
-const StModal = styled.div`
-  position: fixed;
-  z-index: 200;
-  top: 20%;
-  left: 36%;
-  width: 300px;
-  background: white;
-  color: black;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StModalTitle = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StModalSubTitle = styled.p`
-  margin-left: 30px;
-  margin-right: auto;
-`;
-
-const StModalInput = styled.input`
-  margin: 5px;
-  width: 230px;
-  height: 25px;
-  margin-left: 30px;
-  margin-right: auto;
-  margin-bottom: 20px;
-`;
-
-const StModalBtn = styled.button`
-  width: 240px;
-  height: 40px;
-  margin-bottom: 10px;
-  margin-top: 20px;
-  background-color: ${(props) => props.backgroundColor};
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-size: 18px;
-`;
-
-const StSNSContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const StSNSBtns = styled.div`
-  display: flex;
-`;
-
-const StSNSBtn = styled.img`
-  background-color: transparent;
-  width: 40px;
-  height: 40px;
-  margin-left: 15px;
-  margin-right: 15px;
-  cursor: pointer;
-`;
-
-function LogIn() {
-  const [isModal1Open, setIsModal1Open] = useState(false);
-
-  const openModal = () => {
-    setIsModal1Open(true);
-  };
-
-  const closeModal = () => {
-    setIsModal1Open(false);
-  };
-
+function LogIn({ openModal, closeModal, isLogInOpen }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // const [join, setJoin] = useState('회원가입');
+
+  const openLogInModal = () => {
+    openModal();
+  };
+
+  const closeLogInModal = () => {
+    closeModal();
+    setEmail('');
+    setPassword('');
+  };
 
   const signIn = async (event) => {
     event.preventDefault();
@@ -99,20 +40,26 @@ function LogIn() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
       alert('로그인 되었습니다.');
-      closeModal();
+      closeLogInModal();
     } catch (error) {
       console.error(error);
     }
   };
 
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     return !auth.currentUser ? setJoin('회원가입') : setJoin('닉네임');
+  //   });
+  // }, [auth]);
+
   return (
     <>
-      <StHeaderBtn onClick={openModal}>로그인</StHeaderBtn>
-      {isModal1Open && (
+      <StHeaderBtn onClick={openLogInModal}>로그인</StHeaderBtn>
+      {isLogInOpen && (
         <StModal>
           <StModalTitle>
-            <h3 style={{ fontSize: '23px', fontWeight: 'bold', marginBottom: '10px' }}>LOG IN</h3>
-            <h4 style={{ fontSize: '13px', marginBottom: '20px' }}>지역기반 여행 가이드</h4>
+            <StModalTitleL>LOG IN</StModalTitleL>
+            <StModalTitleS>지역기반 여행 가이드</StModalTitleS>
           </StModalTitle>
 
           <StModalSubTitle>이메일</StModalSubTitle>
@@ -134,15 +81,17 @@ function LogIn() {
             }}
           ></StModalInput>
 
-          <p style={{ fontSize: '12px', marginLeft: '30px', marginRight: 'auto', color: 'red' }}>
-            비밀번호가 일치하지 않습니다.
-          </p>
-
-          <StModalBtn backgroundColor="#474688" onClick={signIn}>
-            로그인
-          </StModalBtn>
+          <StWarnMent>비밀번호가 일치하지 않습니다.</StWarnMent>
+          <StModalBtns>
+            <StModalBtn backgroundColor="#474688" onClick={signIn}>
+              로그인
+            </StModalBtn>
+            <StModalBtn backgroundColor="#F55150" onClick={closeLogInModal}>
+              뒤로가기
+            </StModalBtn>
+          </StModalBtns>
           <StSNSContainer>
-            <p style={{ fontWeight: 'bold', margin: '10px' }}>SNS 간편 로그인</p>
+            <StSNSTitle>SNS 간편 로그인</StSNSTitle>
             <StSNSBtns>
               <StSNSBtn
                 class="fit-picture"

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import SignUp from '../components/SignUp';
-import LogIn from '../components/LogIn';
+import SignUp from '../components/signup/SignUp';
+import LogIn from '../components/login/LogIn';
 
 const StHeader = styled.header`
   display: flex;
@@ -32,6 +32,26 @@ const StFooter = styled.div`
 
 function Layout() {
   const navigate = useNavigate();
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const [isLogInOpen, setIsLogInOpen] = useState(false);
+
+  // 모달 여닫기
+  // 로그인, 회원가입 모달이 동시에 존재하지 않게
+  const openSignUpModal = () => {
+    setIsSignUpOpen(true);
+    setIsLogInOpen(false);
+  };
+
+  const openLogInModal = () => {
+    setIsLogInOpen(true);
+    setIsSignUpOpen(false);
+  };
+
+  const closeModal = () => {
+    setIsSignUpOpen(false);
+    setIsLogInOpen(false);
+  };
+
   return (
     <div
       style={{
@@ -57,8 +77,8 @@ function Layout() {
             gap: '12px'
           }}
         >
-          <SignUp />
-          <LogIn />
+          <SignUp openModal={openSignUpModal} closeModal={closeModal} isSignUpOpen={isSignUpOpen} />
+          <LogIn openModal={openLogInModal} closeModal={closeModal} isLogInOpen={isLogInOpen} />
         </div>
       </StHeader>
       <Outlet />
