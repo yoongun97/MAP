@@ -20,6 +20,7 @@ import {
   StOverlapBtn,
   StWarnMent
 } from './StyledSignUp';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp({ openModal, closeModal, isSignUpOpen }) {
   const [email, setEmail] = useState('');
@@ -30,6 +31,7 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
   const [passwordMatch, setPasswordMatch] = useState(true); // 비밀번호 일치 여부 상태 추가
   const [showPasswordMismatch, setShowPasswordMismatch] = useState(false); // 비밀번호 불일치 메시지 표시 여부 상태 추가
   const [currentUser, setCurrentUser] = useState(null); // 현재 로그인된 사용자 닉네임 상태 추가
+  const navigate = useNavigate();
 
   // 모달 여닫기
   const openSignUpModal = () => {
@@ -160,7 +162,13 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
     <>
       {currentUser ? (
         // 로그인된 사용자 닉네임이 있으면 표시
-        <StHeaderBtn>{currentUser}</StHeaderBtn>
+        <StHeaderBtn
+          onClick={() => {
+            navigate(`/mypage`);
+          }}
+        >
+          {currentUser}
+        </StHeaderBtn>
       ) : (
         // 로그인되지 않은 경우 회원가입 버튼 표시
         <StHeaderBtn onClick={openSignUpModal}>회원가입</StHeaderBtn>
