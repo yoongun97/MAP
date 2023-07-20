@@ -5,7 +5,6 @@ import { sortPlaces } from '../../../redux/module/places';
 
 const ListSearchingBox = () => {
   const dispatch = useDispatch();
-
   const inputRef = useRef(null);
   const [isShow, setIsShow] = useState(false);
   const sortingValues = ['좋아요순', '오름차순', '내림차순'];
