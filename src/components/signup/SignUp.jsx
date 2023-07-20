@@ -18,7 +18,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { addDoc, collection, query, where, getFirestore, getDocs } from 'firebase/firestore';
 
-function SignUp({ openModal, closeModal, isSignUpOpen }) {
+function SignUp({ openModal, closeModal, isSignUpOpen, SignUpModalRef }) {
   const [email, setEmail] = useState('');
   const [nickname, setNickName] = useState('');
   const [password, setPassword] = useState('');
@@ -193,7 +193,7 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
         <StHeaderBtn onClick={openSignUpModal}>회원가입</StHeaderBtn>
       )}
       {isSignUpOpen && (
-        <StModal>
+        <StModal ref={SignUpModalRef}>
           <StModalTitle>
             <StModalTitleL>SIGN UP</StModalTitleL>
             <StModalTitleS>지역기반 여행 가이드</StModalTitleS>
