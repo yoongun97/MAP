@@ -11,8 +11,9 @@ export const StHeaderBtn = styled.button`
 export const StModal = styled.div`
   position: fixed;
   z-index: 200;
-  top: 20%;
-  left: 36%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 300px;
   background: white;
   color: black;
@@ -99,6 +100,6 @@ export const StWarnMent = styled.p`
 `;
 
 export const StSNSTitle = styled.p`
-  font-weight: bold
+  font-weight: bold;
   margin: 10px;
 `;
