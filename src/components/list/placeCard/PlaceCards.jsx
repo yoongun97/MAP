@@ -18,13 +18,13 @@ const PlaceCards = () => {
   });
 
   // const currentUser = 'user';
-  const currentUser = auth.currentUser.uid;
+  const currentUser = auth.currentUser;
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user.uid);
+      console.log(user);
     });
   }, []);
-  console.log('curUser', currentUser.uid);
+  console.log('curUser', currentUser);
 
   return (
     <L.Wrap>
