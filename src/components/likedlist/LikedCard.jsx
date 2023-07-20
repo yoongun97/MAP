@@ -1,17 +1,15 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-import { db, auth } from '../../firebase';
+import { useEffect } from 'react';
+import { auth } from '../../firebase';
 import { onAuthStateChanged } from '@firebase/auth';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { L } from './StyledLikedCard';
 import { useMutation, useQueryClient } from 'react-query';
 import { handleLike } from '../../api/likes';
+import { useSelector } from 'react-redux';
 
 function LikedCard() {
-  const [likedPlaces, setLikedPlaces] = useState([]);
   const currentUser = auth.currentUser.uid;
-  //   const params = useParams();
   const navigate = useNavigate;
   const queryClient = useQueryClient();
   const likeMutation = useMutation(handleLike, {
@@ -19,8 +17,8 @@ function LikedCard() {
       queryClient.invalidateQueries('placeData');
     }
   });
-  //   const places = useSelector((state) => state.places);
-  //   const likedPlaces = places.filter(places.uid)
+  const places = useSelector((state) => state.places);
+  const likedPlaces = places.filter((place) => place.likedUsers.includes(currentUser));
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -28,42 +26,6 @@ function LikedCard() {
     });
   }, []);
   console.log('curUser', currentUser.uid);
-
-  useEffect(() => {
-    const fetchLikedPlaces = async () => {
-      try {
-        // 현재 사용자의 uid와 일치하는 문서들을 likes 컬렉션에서 쿼리
-        const likedPlacesRef = collection(db, 'likes');
-        const q = query(likedPlacesRef, where('uid', '==', currentUser));
-        const querySnapshot = await getDocs(q);
-
-        const likedPlaceIds = [];
-
-        // likes 컬렉션에서 가져온 문서들의 placeId를 배열에 저장
-        querySnapshot.forEach((doc) => {
-          likedPlaceIds.push(doc.data().placeId);
-        });
-
-        const fetchedLikedPlaces = [];
-
-        // likes 컬렉션에서 가져온 placeId를 사용하여 places 컬렉션에서 해당 문서들을 쿼리
-        for (const placeId of likedPlaceIds) {
-          const placeDocRef = doc(db, 'places', placeId);
-          const placeDocSnapshot = await getDoc(placeDocRef);
-
-          if (placeDocSnapshot.exists()) {
-            fetchedLikedPlaces.push(placeDocSnapshot.data());
-          }
-        }
-
-        setLikedPlaces(fetchedLikedPlaces);
-      } catch (error) {
-        console.error('Error fetching liked places:', error);
-      }
-    };
-
-    fetchLikedPlaces();
-  }, [currentUser]);
 
   return (
     <div>
@@ -85,7 +47,7 @@ function LikedCard() {
                   {place.placeName}
                   <p>{place.content}</p>
                 </span>
-                {/* <div className="like-box">
+                <div className="like-box">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="20"
@@ -104,7 +66,7 @@ function LikedCard() {
                     />
                   </svg>
                   <p>{place.likes}</p>
-                </div> */}
+                </div>
               </div>
             </div>
           );
