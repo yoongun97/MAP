@@ -30,6 +30,10 @@ const StFooter = styled.div`
   box-sizing: border-box;
 `;
 
+const StContent = styled.div`
+  ${({ ismodalopen }) => ismodalopen && 'opacity: 0.3;'}// 모달이 열렸을 때 투명도 변경
+`;
+
 function Layout() {
   const navigate = useNavigate();
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -81,9 +85,9 @@ function Layout() {
           <SignUp openModal={openSignUpModal} closeModal={closeModal} isSignUpOpen={isSignUpOpen} />
         </div>
       </StHeader>
-      <Outlet />
-
-      {/* Route 안의 요소들을 보여줄 위치 */}
+      <StContent view={isSignUpOpen || isLogInOpen}>
+        <Outlet />
+      </StContent>
       <StFooter>
         <div>문의하기</div>
         <div>SNS 채널들</div>

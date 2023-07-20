@@ -2,8 +2,8 @@ import { items } from '../constant/items';
 // onLoadKakaoMap 함수 밖에서 사용할 수 있도록 선언
 let map;
 let marker;
-// let positionX;
-// let positionY;
+let positionX;
+let positionY;
 
 // 마커 배열
 let markers = [];
@@ -112,12 +112,12 @@ export const onLoadKakaoMap = () => {
       addMarker(latlng);
 
       // 확인 및 다른 컴포넌트에서 필요할 경우 사용하는 positionX와 positionY
-      //   positionX = latlng.getLat();
-      //   positionY = latlng.getLng();
-      //   let message = '클릭한 위치의 위도는 ' + positionX + ' 이고, ';
-      //   message += '경도는 ' + positionY + ' 입니다';
+      positionX = latlng.getLat();
+      positionY = latlng.getLng();
+      let message = '클릭한 위치의 위도는 ' + positionX + ' 이고, ';
+      message += '경도는 ' + positionY + ' 입니다';
 
-      //   alert(message);
+      alert(message);
     });
   });
 };
