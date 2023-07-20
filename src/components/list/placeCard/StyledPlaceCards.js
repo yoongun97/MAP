@@ -5,11 +5,12 @@ export const L = {
     width: 80%;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, minmax(225px, 1fr));
-    grid-gap: 40px 20px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 25%));
+    grid-gap: 40px 0;
     align-items: center;
+    justify-content: center;
     .card-container {
-      width: 74%;
+      width: 80%;
       aspect-ratio: 7/10;
       border-radius: 2px;
       box-shadow: 0 2.5px 2px 0 gray;
