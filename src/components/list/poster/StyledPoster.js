@@ -11,14 +11,11 @@ export const P = {
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.3);
-      transform: scale(1.003);
-      z-index: 1;
       pointer-events: none;
     }
     img {
       width: 100%;
       height: 100%;
-      transform: scale(1.003);
     }
     h2 {
       position: absolute;
@@ -28,8 +25,7 @@ export const P = {
       font-size: 50px;
       font-weight: bold;
       color: white;
-      z-index: 2;
+      z-index: 1;
     }
-    border: 1px solid gray;
   `
 };

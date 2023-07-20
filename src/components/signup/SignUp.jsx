@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { auth } from '../../firebase';
-import {
-  createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-  updateProfile,
-  onAuthStateChanged
-} from 'firebase/auth';
+import { auth, db } from '../../firebase';
+import { createUserWithEmailAndPassword, fetchSignInMethodsForEmail, onAuthStateChanged } from 'firebase/auth';
 import {
   StHeaderBtn,
   StModal,
@@ -21,6 +16,7 @@ import {
   StWarnMent
 } from './StyledSignUp';
 import { useNavigate } from 'react-router-dom';
+import { addDoc, collection, query, where, getFirestore, getDocs } from 'firebase/firestore';
 
 function SignUp({ openModal, closeModal, isSignUpOpen }) {
   const [email, setEmail] = useState('');
@@ -62,13 +58,24 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
     }
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(userCredential.user, { displayName: nickname }); // 닉네임 업데이트
 
-      console.log(userCredential);
-      // console.log('가입된 닉네임:', userCredential.user.displayName); // 닉네임 출력
       alert('가입되었습니다.');
+
+      const uid = userCredential.user.uid;
+
+      await addDoc(collection(db, 'users'), {
+        uid: uid,
+        email: email,
+        nickname: nickname
+      });
+
+      // 회원가입 완료 후 사용자의 로그인 상태 변경
+      setCurrentUser(nickname);
+
       closeSignUpModal();
     } catch (error) {
+      alert('가입에 실패했습니다!');
+
       console.error(error);
     }
   };
@@ -125,15 +132,14 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
       alert('닉네임을 입력해 주세요!');
       return;
     }
-
     try {
-      // 닉네임이 이미 존재하는지 확인
-      const domain = 'firebaseapp.com'; // Firebase Authentication에서 사용하는 도메인
-      const email = `${nickname}@${domain}`;
+      const db = getFirestore();
+      const usersCollectionRef = collection(db, 'users');
+      const q = query(usersCollectionRef, where('nickname', '==', nickname));
+      const querySnapshot = await getDocs(q);
 
-      const methods = await fetchSignInMethodsForEmail(auth, email);
-      if (methods.length > 0) {
-        // 이미 존재하는 닉네임
+      if (!querySnapshot.empty) {
+        // 이미 존재하는 닉네임입니다
         alert('이미 존재하는 닉네임입니다.');
       } else {
         // 사용 가능한 닉네임
@@ -147,9 +153,22 @@ function SignUp({ openModal, closeModal, isSignUpOpen }) {
 
   useEffect(() => {
     // 사용자의 로그인 상태 변경 감지
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setCurrentUser(user.displayName); // 로그인된 사용자의 닉네임을 설정
+        // 로그인된 사용자의 uid로 users 컬렉션에서 해당 사용자의 정보를 가져옴
+        try {
+          const usersRef = collection(db, 'users');
+          const querySnapshot = await getDocs(query(usersRef, where('uid', '==', user.uid)));
+
+          if (!querySnapshot.empty) {
+            // 해당 사용자의 정보를 찾으면 닉네임을 가져와서 setCurrentUser로 설정
+            querySnapshot.forEach((doc) => {
+              setCurrentUser(doc.data().nickname);
+            });
+          }
+        } catch (error) {
+          console.log('사용자 정보를 가져오는 데 실패했습니다:', error);
+        }
       } else {
         setCurrentUser(null); // 로그인되지 않은 상태면 null로 설정
       }

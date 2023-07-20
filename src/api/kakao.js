@@ -2,8 +2,8 @@ import { items } from '../constant/items';
 // onLoadKakaoMap 함수 밖에서 사용할 수 있도록 선언
 let map;
 let marker;
-// let positionX;
-// let positionY;
+let positionX;
+let positionY;
 
 // 마커 배열
 let markers = [];
@@ -16,25 +16,26 @@ const setMarkers = (map) => {
 };
 
 export const allMarkers = () => {
+  const kakao = window.kakao;
   setMarkers(null);
   items.forEach((item) => {
     // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
     const iwContent = `<div style="padding:5px;">${item.title}</div>`;
 
     // 인포윈도우를 생성합니다
-    const infowindow = new window.kakao.maps.InfoWindow({
+    const infowindow = new kakao.maps.InfoWindow({
       content: iwContent
     });
     const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
 
     // 마커 이미지의 이미지 크기 입니다
-    const imageSize = new window.kakao.maps.Size(24, 35);
+    const imageSize = new kakao.maps.Size(24, 35);
 
     // 마커 이미지를 생성합니다
-    const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize);
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
     // 마커를 생성합니다
-    const latlng = new window.kakao.maps.LatLng(item.mapy, item.mapx);
+    const latlng = new kakao.maps.LatLng(item.mapy, item.mapx);
 
     addMarker(latlng, infowindow, markerImage);
   });
@@ -91,14 +92,13 @@ export const onLoadKakaoMap = () => {
   kakao.maps.load(() => {
     const mapContainer = document.getElementById('map');
     const mapOption = {
-      center: new kakao.maps.LatLng(33.375401437086374, 126.54367184964627), // 지도의 중심좌표
-      level: 10 // 지도의 확대 레벨
+      center: new kakao.maps.LatLng(33.488827746197295, 126.49822966114715), // 지도의 중심좌표
+      level: 6 // 지도의 확대 레벨
     };
 
     // 지도 완성
     map = new kakao.maps.Map(mapContainer, mapOption);
 
-    allMarkers();
     // 지도에 클릭 이벤트 등록
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출
     kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
@@ -108,16 +108,19 @@ export const onLoadKakaoMap = () => {
       // 클릭한 위도, 경도 정보를 가져옵니다
       const latlng = mouseEvent.latLng;
 
+      // 클릭한 위치를 기반으로 근처 item들의 마커를 보여줍니다.
+      allMarkers();
+
       // 마커 위치를 클릭한 위치로 옮깁니다
       addMarker(latlng);
 
       // 확인 및 다른 컴포넌트에서 필요할 경우 사용하는 positionX와 positionY
-      //   positionX = latlng.getLat();
-      //   positionY = latlng.getLng();
-      //   let message = '클릭한 위치의 위도는 ' + positionX + ' 이고, ';
-      //   message += '경도는 ' + positionY + ' 입니다';
+      positionX = latlng.getLat();
+      positionY = latlng.getLng();
+      let message = '클릭한 위치의 위도는 ' + positionX + ' 이고, ';
+      message += '경도는 ' + positionY + ' 입니다';
 
-      //   alert(message);
+      alert(message);
     });
   });
 };
