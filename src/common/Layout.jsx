@@ -68,7 +68,7 @@ function Layout() {
       <StHeader>
         <StLogo
           onClick={() => {
-            navigate('/');
+            navigate('/list');
           }}
           style={{ cursor: 'pointer' }}
         >
