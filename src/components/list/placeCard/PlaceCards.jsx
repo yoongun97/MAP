@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { L } from './StyledPlaceCards';
 import { useMutation, useQueryClient } from 'react-query';
 import { handleLike } from '../../../api/likes';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { auth } from '../../../firebase';
-import { onAuthStateChanged } from '@firebase/auth';
 
 const PlaceCards = () => {
   const data = useSelector((state) => state.places);
@@ -17,14 +16,7 @@ const PlaceCards = () => {
     }
   });
 
-  // const currentUser = 'user';
-  const currentUser = auth.currentUser;
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user);
-    });
-  }, []);
-  console.log('curUser', currentUser);
+  const currentUser = auth.currentUser?.uid;
 
   return (
     <L.Wrap>
