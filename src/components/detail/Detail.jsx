@@ -4,6 +4,7 @@ import noImage from '../../assets/noimage.png';
 import KakaoMap from './KakaoMap';
 import { onClickSpotCreateMarker, onLoadKakaoMap, allMarkers } from '../../api/kakao';
 import { items } from '../../constant/items';
+import List from './List';
 const Detail = () => {
   // script를 만들어 kakao api를 받아온다.
   const mapScript = document.createElement('script');
@@ -21,30 +22,7 @@ const Detail = () => {
       <S.detailBox>상세 페이지</S.detailBox>
       <KakaoMap />
       <button onClick={() => allMarkers()}>초기화</button>
-      <S.detailPlaceList>
-        <S.spotList>
-          {items.map((item) => {
-            return (
-              <S.spotCard
-                key={item.contentid}
-                onClick={() => onClickSpotCreateMarker(item.mapy, item.mapx, item.title)}
-              >
-                <S.spotImage>
-                  {item.firstimage ? (
-                    <img src={item.firstimage} alt="명소 이미지" />
-                  ) : (
-                    <img src={noImage} alt="이미지 없음" />
-                  )}
-                </S.spotImage>
-                <div>
-                  <p>{item.title}</p>
-                  <span>{item.addr1}</span>
-                </div>
-              </S.spotCard>
-            );
-          })}
-        </S.spotList>
-      </S.detailPlaceList>
+      <List />
     </S.detailContainer>
   );
 };

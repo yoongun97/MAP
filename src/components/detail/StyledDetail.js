@@ -21,8 +21,26 @@ export const detailPlaceList = styled.div`
   width: 25%;
 `;
 
-export const spotList = styled.ul``;
-
+export const spotList = styled.ul`
+  height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+  }
+`;
+export const StTitle = styled.p`
+  font-size: 17px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+export const StDesc = styled.p`
+  font-size: 15px;
+`;
 export const spotCard = styled.li`
   /* box-shadow: rgba(31, 38, 135, 0.1) 0px 8px 32px 0px; */
   backdrop-filter: blur(4px);
