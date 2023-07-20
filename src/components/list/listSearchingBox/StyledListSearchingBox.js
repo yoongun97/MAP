@@ -41,6 +41,10 @@ export const LSB = {
 
       button {
         position: relative;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 0 3px gray;
       }
 
       .current-sort-btn-box {
@@ -59,10 +63,10 @@ export const LSB = {
 
       .dropdown {
         position: absolute;
-        display: ${(props) => (props.view ? 'block' : 'none')};
+        display: ${(props) => (props.view === 'true' ? 'block' : 'none')};
         width: 150px;
         padding: 10px;
-        margin: 150px 0 0 0;
+        margin: 140px 0 0 0;
         background-color: white;
         box-shadow: 0 -0.5px 3px 0 gray;
         z-index: 1;

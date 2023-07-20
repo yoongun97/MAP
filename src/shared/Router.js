@@ -14,7 +14,6 @@ function Router() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route element={<Layout />}>
-          <Route path="/" element={<Main />} />
           <Route path="/list" element={<ListPage />} />
           <Route path="/Detail" element={<DetailPage />} />
           <Route path="/mypage" element={<MyPage />} />
