@@ -17,14 +17,14 @@ const PlaceCards = () => {
     }
   });
 
-  const currentUser = 'user';
-  // const [currentUser, setCurrentUser] = useState(auth.currentUser.uid)
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     console.log(user.uid);
-  //   });
-  // }, []);
-  // console.log('curUser', currentUser.uid);
+  // const currentUser = 'user';
+  const currentUser = auth.currentUser.uid;
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user.uid);
+    });
+  }, []);
+  console.log('curUser', currentUser.uid);
 
   return (
     <L.Wrap>

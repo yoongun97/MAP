@@ -74,8 +74,8 @@ export const StSNSBtns = styled.div`
 
 export const StSNSBtn = styled.img`
   background-color: transparent;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   margin-left: 15px;
   margin-right: 15px;
   cursor: pointer;
