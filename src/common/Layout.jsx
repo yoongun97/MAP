@@ -31,7 +31,7 @@ const StFooter = styled.div`
 `;
 
 const StContent = styled.div`
-  ${({ ismodalopen }) => ismodalopen && 'opacity: 0.3;'}// 모달이 열렸을 때 투명도 변경
+  ${({ $view }) => $view && 'opacity: 0.3;'}// 모달이 열렸을 때 투명도 변경
 `;
 
 function Layout() {
@@ -85,7 +85,7 @@ function Layout() {
           <SignUp openModal={openSignUpModal} closeModal={closeModal} isSignUpOpen={isSignUpOpen} />
         </div>
       </StHeader>
-      <StContent view={isSignUpOpen || isLogInOpen}>
+      <StContent $view={isSignUpOpen || isLogInOpen}>
         <Outlet />
       </StContent>
       <StFooter>

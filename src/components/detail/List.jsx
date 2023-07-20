@@ -1,16 +1,12 @@
 import { React, useEffect, useState, useCallback, useRef } from 'react';
 import * as S from './StyledDetail';
-import styled from 'styled-components';
 import { items } from '../../constant/items';
 import { onClickSpotCreateMarker } from '../../api/kakao';
 import noImage from '../../assets/noimage.png';
 import { getPlaces } from '../../api/tourPlaces';
 import { ReactComponent as Spinner } from '../../assets/Spinner.svg';
 import useInfiniteScoll from '../../hooks/useInfiniteScroll';
-import { useParams } from 'react-router';
-import { getDetailPlaceData } from '../../api/places';
-function List() {
-  const { placeId } = useParams();
+function List({ place }) {
   const ref = useRef(null);
 
   const [page, setPage] = useState(1);
@@ -19,13 +15,6 @@ function List() {
     setPage(page + 1);
   });
   const [observe, unobserve] = useInfiniteScoll(increasePage);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const placeData = await getDetailPlaceData(placeId);
-      console.log(placeData);
-    };
-  }, []);
 
   useEffect(() => {
     //fetch하는 로직

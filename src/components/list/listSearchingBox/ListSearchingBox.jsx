@@ -20,7 +20,7 @@ const ListSearchingBox = () => {
   });
 
   return (
-    <LSB.SearchContainer view={isShow.toString()}>
+    <LSB.SearchContainer $view={isShow.toString()}>
       <div
         className="search-box"
         onClick={() => {
