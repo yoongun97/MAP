@@ -14,7 +14,7 @@ const PlaceCards = () => {
       queryClient.invalidateQueries('placeData');
     }
   });
-  const currentUser = 'user65'; //Auth.currentUser처럼 실시간 로그인 된 유저로 적용할 수 있도록 추후 수정.
+  const currentUser = ''; //Auth.currentUser처럼 실시간 로그인 된 유저로 적용할 수 있도록 추후 수정.
 
   return (
     <L.Wrap>
@@ -24,7 +24,7 @@ const PlaceCards = () => {
             key={idx}
             className="card-container"
             onClick={() => {
-              navigate('/Detail');
+              navigate(`/${place.id}`);
             }}
           >
             <div className="img-div">
