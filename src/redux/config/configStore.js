@@ -1,7 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
+import places from '../module/places';
 
 const store = configureStore({
-  reducer: {},
+  reducer: { places: places },
   devTools: process.env.NODE_ENV !== 'production'
 });
 
