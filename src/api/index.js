@@ -3,7 +3,7 @@ import axios from 'axios';
 const instance = axios.create({
   baseURL: `http://apis.data.go.kr/B551011/KorService1`,
   withCredentials: false,
-  timeout: 2000
+  timeout: 100000000
 });
 
 instance.interceptors.request.use(

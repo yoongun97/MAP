@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { LSB } from './StyledListSearchingBox';
 import { useDispatch } from 'react-redux';
-import { sortPlaces } from '../../../redux/module/places';
+import { sortPlaces } from '../../../redux/modules/places';
 
 const ListSearchingBox = () => {
   const dispatch = useDispatch();
