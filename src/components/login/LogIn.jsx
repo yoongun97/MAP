@@ -60,7 +60,7 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
 
   // 로그아웃 버튼 클릭 시 이벤트
   const signOutHandler = async () => {
-    alert('로그아웃 하시겠습니까?');
+    // alert('로그아웃 하시겠습니까?');
     await signOut(auth);
   };
 
