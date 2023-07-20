@@ -6,6 +6,11 @@ import SignUp from '../components/signup/SignUp';
 import LogIn from '../components/login/LogIn';
 
 const StHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
   display: flex;
   justify-content: space-between;
   padding: 24px;
@@ -32,6 +37,7 @@ const StFooter = styled.div`
 
 const StContent = styled.div`
   ${({ view }) => view && 'opacity: 0.3'}; // 모달이 열렸을 때 투명도 변경
+  margin-top: 73px;
 `;
 
 function Layout() {
