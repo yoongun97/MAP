@@ -1,4 +1,4 @@
-import { collection, getDocs, where, query } from 'firebase/firestore';
+import { collection, getDocs, where, query, getDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const getPlaceData = async () => {
@@ -24,4 +24,17 @@ const getPlaceData = async () => {
   return places;
 };
 
-export { getPlaceData };
+const getDetailPlaceData = async (id) => {
+  console.log(id);
+  const docRef = doc(db, 'places', id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return {
+      ...docSnap.data()
+    };
+  } else {
+    console.log('No such document!');
+  }
+};
+
+export { getPlaceData, getDetailPlaceData };

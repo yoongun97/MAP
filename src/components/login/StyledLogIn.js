@@ -99,6 +99,6 @@ export const StWarnMent = styled.p`
 `;
 
 export const StSNSTitle = styled.p`
-  font-weight: bold
+  font-weight: bold;
   margin: 10px;
 `;
