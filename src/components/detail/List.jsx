@@ -7,16 +7,30 @@ import noImage from '../../assets/noimage.png';
 import { getPlaces } from '../../api/tourPlaces';
 import { ReactComponent as Spinner } from '../../assets/Spinner.svg';
 import useInfiniteScoll from '../../hooks/useInfiniteScroll';
+import { useParams } from 'react-router';
+import { getDetailPlaceData } from '../../api/places';
 function List() {
+  const { placeId } = useParams();
+  const ref = useRef(null);
+
   const [page, setPage] = useState(1);
+
   const increasePage = useCallback(() => {
     setPage(page + 1);
   });
-  const ref = useRef(null);
   const [observe, unobserve] = useInfiniteScoll(increasePage);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const placeData = await getDetailPlaceData(placeId);
+      console.log(placeData);
+    };
+  }, []);
+
   useEffect(() => {
     //fetch하는 로직
   }, [page]);
+
   return (
     <S.detailPlaceList>
       <S.spotList>

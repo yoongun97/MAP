@@ -16,6 +16,7 @@ const PlaceCards = () => {
       queryClient.invalidateQueries('placeData');
     }
   });
+
   const currentUser = 'user';
   // const [currentUser, setCurrentUser] = useState(auth.currentUser.uid)
   // useEffect(() => {
@@ -24,6 +25,7 @@ const PlaceCards = () => {
   //   });
   // }, []);
   // console.log('curUser', currentUser.uid);
+
   return (
     <L.Wrap>
       {data.map((place, idx) => {
@@ -32,7 +34,7 @@ const PlaceCards = () => {
             key={idx}
             className="card-container"
             onClick={() => {
-              navigate('/Detail');
+              navigate(`/${place.id}`);
             }}
           >
             <div className="img-div">
