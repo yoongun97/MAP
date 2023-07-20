@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { L } from './StyledPlaceCards';
 import { useMutation, useQueryClient } from 'react-query';
 import { handleLike } from '../../../api/likes';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { auth } from '../../../firebase';
+import { onAuthStateChanged } from '@firebase/auth';
 
 const PlaceCards = () => {
   const data = useSelector((state) => state.places);
@@ -14,7 +16,15 @@ const PlaceCards = () => {
       queryClient.invalidateQueries('placeData');
     }
   });
-  const currentUser = ''; //Auth.currentUser처럼 실시간 로그인 된 유저로 적용할 수 있도록 추후 수정.
+
+  const currentUser = 'user';
+  // const [currentUser, setCurrentUser] = useState(auth.currentUser.uid)
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (user) => {
+  //     console.log(user.uid);
+  //   });
+  // }, []);
+  // console.log('curUser', currentUser.uid);
 
   return (
     <L.Wrap>
