@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { LSB } from './StyledListSearchingBox';
 import { useDispatch } from 'react-redux';
-import { sortPlaces } from '../../../redux/module/places';
+import { sortPlaces } from '../../../redux/modules/places';
 
 const ListSearchingBox = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const ListSearchingBox = () => {
   });
 
   return (
-    <LSB.SearchContainer view={isShow.toString()}>
+    <LSB.SearchContainer $view={isShow.toString()}>
       <div
         className="search-box"
         onClick={() => {
