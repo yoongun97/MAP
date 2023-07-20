@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -45,6 +45,28 @@ function Layout() {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
 
+  // 모달 외부영역 참조
+  const SignUpModalRef = useRef(null);
+  const LogInModalRef = useRef(null);
+
+  // 외부 영역 클릭 이벤트
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (SignUpModalRef.current && !SignUpModalRef.current.contains(event.target)) {
+        setIsSignUpOpen(false);
+      }
+      if (LogInModalRef.current && !LogInModalRef.current.contains(event.target)) {
+        setIsLogInOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   // 모달 여닫기
   // 로그인, 회원가입 모달이 동시에 존재하지 않게
   const openSignUpModal = () => {
@@ -87,8 +109,18 @@ function Layout() {
             gap: '12px'
           }}
         >
-          <LogIn openModal={openLogInModal} closeModal={closeModal} isLogInOpen={isLogInOpen} />
-          <SignUp openModal={openSignUpModal} closeModal={closeModal} isSignUpOpen={isSignUpOpen} />
+          <LogIn
+            openModal={openLogInModal}
+            closeModal={closeModal}
+            isLogInOpen={isLogInOpen}
+            LogInModalRef={LogInModalRef}
+          />
+          <SignUp
+            openModal={openSignUpModal}
+            closeModal={closeModal}
+            isSignUpOpen={isSignUpOpen}
+            SignUpModalRef={SignUpModalRef}
+          />
         </div>
       </StHeader>
       <StContent view={isSignUpOpen || isLogInOpen}>
