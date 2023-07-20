@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import places from '../moduless/places';
+import places from '../modules/places';
 import tourPlacesReducer from '../modules/tourPlaces';
 const store = configureStore({
   reducer: { places: places, tourPlacesReducer },
