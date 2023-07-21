@@ -9,7 +9,7 @@ import { handleLike } from '../../api/likes';
 import { useSelector } from 'react-redux';
 
 function LikedCard() {
-  const currentUser = auth.currentUser.uid;
+  const currentUser = auth.currentUser?.uid ?? '';
   const navigate = useNavigate;
   const queryClient = useQueryClient();
   const likeMutation = useMutation(handleLike, {
@@ -22,10 +22,10 @@ function LikedCard() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user.uid);
+      console.log(user?.uid);
     });
   }, []);
-  console.log('curUser', currentUser.uid);
+  console.log('curUser', currentUser?.uid);
 
   return (
     <div>
