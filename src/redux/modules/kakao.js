@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 const name = 'kakao';
+
 export const fetchkakao = createAsyncThunk(`${name}/fetchkakao`, async (LatLng, thunkAPI) => {
   try {
     console.log(LatLng);
@@ -8,11 +9,13 @@ export const fetchkakao = createAsyncThunk(`${name}/fetchkakao`, async (LatLng, 
     return thunkAPI.rejectWithValue(e);
   }
 });
+
 const initialState = {
   kakao: { mapX: null, mapY: null },
   isMarked: false,
   isMarkedMarked: false,
   kakaoLoading: false,
+  fake: false,
   error: null
 };
 
@@ -22,6 +25,9 @@ const kakaoSlice = createSlice({
   reducers: {
     setIsMarkedMarked(state, action) {
       state.isMarkedMarked = true;
+    },
+    fakeDispatch(state, action) {
+      state.fake = !state.fake;
     }
   },
   extraReducers: (builder) => {
@@ -43,4 +49,4 @@ const kakaoSlice = createSlice({
   }
 });
 export default kakaoSlice.reducer;
-export const { setIsMarkedMarked } = kakaoSlice.actions;
+export const { setIsMarkedMarked, fakeDispatch } = kakaoSlice.actions;

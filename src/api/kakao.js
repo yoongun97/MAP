@@ -1,15 +1,18 @@
-import { items } from '../constant/items';
-import { fetchkakao } from '../redux/modules/kakao';
+import { fakeDispatch, fetchkakao } from '../redux/modules/kakao';
 import store from '../redux/config/configStore';
+
 // onLoadKakaoMap 함수 밖에서 사용할 수 있도록 선언
 let map;
 let marker;
-// let positionX;
-// let positionY;
 
 // 마커 배열
 let markers = [];
 let isMarkers = [];
+// let places;
+// export const getPlacesForKakao = (pp) => {
+//   console.log('get > ', pp);
+//   places = pp;
+// };
 
 // 마커 세팅. 마커를 안보이게 하는데 사용.
 const resetMarkers = (map) => {
@@ -24,6 +27,7 @@ const resetMarkers = (map) => {
 // 아이템의 마커가 있는 상태에서 마커 클릭 시 마커 지우기
 const deleteMarker = (title) => {
   let filteringIndex;
+
   isMarkers.forEach((marker, index) => {
     if (marker === title) {
       filteringIndex = index;
@@ -58,32 +62,27 @@ const addMarker = (position, infowindow, markerImage, title) => {
   // 생성된 마커를 배열에 추가합니다
   markers.push(marker);
   isMarkers.push(title);
-  return marker;
 };
 
+// 지도 클릭 시 주변 관광지 마커 보이기
 export const allMarkers = () => {
-  const kakao = window.kakao;
   resetMarkers(null);
-  items.forEach((item) => {
+
+  const kakao = window.kakao;
+  const places = store.getState().tourPlacesReducer.tourPlaces;
+  places.forEach((place) => {
     // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    const iwContent = `<div style="padding:5px;">${item.title}</div>`;
+    const iwContent = `<div style="padding:5px;">${place.title}</div>`;
 
     // 인포윈도우를 생성합니다
     const infowindow = new kakao.maps.InfoWindow({
       content: iwContent
     });
-    const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
-
-    // 마커 이미지의 이미지 크기 입니다
-    const imageSize = new kakao.maps.Size(24, 35);
-
-    // 마커 이미지를 생성합니다
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
     // 마커를 생성합니다
-    const latlng = new kakao.maps.LatLng(item.mapy, item.mapx);
+    const latlng = new kakao.maps.LatLng(place.mapy, place.mapx);
 
-    addMarker(latlng, infowindow, markerImage);
+    addMarker(latlng, infowindow);
   });
 };
 
@@ -129,14 +128,22 @@ export const onLoadKakaoMap = (mapY, mapX) => {
       // 클릭한 위도, 경도 정보를 가져옵니다
       const latlng = mouseEvent.latLng;
 
+      const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
+      // 마커 이미지의 이미지 크기 입니다
+      const imageSize = new kakao.maps.Size(24, 35);
+
+      // 마커 이미지를 생성합니다
+      const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+      // 확인 및 다른 컴포넌트에서 필요할 경우 사용하는 positionX와 positionY
+      store.dispatch(fetchkakao(latlng));
+      store.dispatch(fakeDispatch());
+
       // 클릭한 위치를 기반으로 근처 item들의 마커를 보여줍니다.
       allMarkers();
 
       // 마커 위치를 클릭한 위치로 옮깁니다
-      addMarker(latlng);
-
-      // 확인 및 다른 컴포넌트에서 필요할 경우 사용하는 positionX와 positionY
-      store.dispatch(fetchkakao(latlng));
+      addMarker(latlng, '', markerImage);
     });
   });
 };
@@ -146,6 +153,7 @@ export const onClickSpotCreateMarker = (lat, lng, title) => {
   if (!map) return; // map이 초기화되지 않았을 경우 처리
 
   // 이미 마커가 생성된 경우 삭제
+  resetMarkers(null);
 
   if (isMarkers.filter((marker) => marker === title)[0]) {
     deleteMarker(title);
