@@ -7,9 +7,6 @@ const breakpoint1200 = '1200px';
 export const mainContainer = styled.div`
   display: flex;
   height: 100%;
-  @media (max-width: ${breakpoint800}) {
-    flex-direction: column;
-  }
 `;
 
 export const mainLeftContainer = styled.div`
