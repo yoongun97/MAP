@@ -74,6 +74,7 @@ export const mainStartButton = styled.button`
 
 export const mainVideo = styled.video`
   height: 100%;
+  z-index: -1;
 `;
 
 export const mainNav = styled.div`
