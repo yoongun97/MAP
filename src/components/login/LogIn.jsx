@@ -4,6 +4,7 @@ import {
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
+  GithubAuthProvider,
   signInWithPopup
 } from 'firebase/auth';
 import { auth, db } from '../../firebase';
@@ -24,12 +25,15 @@ import {
   StSNSTitle,
   StModalBtns
 } from './StyledLogIn';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+  const params = useParams();
 
   //모달 여닫기
   const openLogInModal = () => {
@@ -69,6 +73,9 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   const signOutHandler = async () => {
     // alert('로그아웃 하시겠습니까?');
     await signOut(auth);
+    if (params.uid) {
+      navigate('/list');
+    }
   };
 
   // email input
@@ -84,6 +91,42 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   // Google 로그인
   const LogInByGoogle = () => {
     const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+        const user = result.user;
+        const { email, uid, displayName } = user;
+        const userDocRef = doc(db, 'users', uid); // 해당 유저의 문서 참조
+        getDoc(userDocRef)
+          .then((docSnapshot) => {
+            if (!docSnapshot.exists()) {
+              // 데이터가 없는 경우에만 초기값으로 설정
+              const nickname = displayName;
+
+              setDoc(
+                userDocRef,
+                {
+                  email: email,
+                  nickname: nickname,
+                  uid: uid
+                },
+                { merge: true }
+              );
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        closeLogInModal();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // Github 로그인
+  const LogInByGithub = () => {
+    const provider = new GithubAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
@@ -185,6 +228,7 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
                 className="fit-picture"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6l6p1-u8laWPIJvDhqG8c6gq9Ms9o-ajc0g&usqp=CAU"
                 alt="깃허브"
+                onClick={LogInByGithub}
               />
 
               <StSNSBtn
