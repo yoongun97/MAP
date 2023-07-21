@@ -183,7 +183,7 @@ function SignUp({ openModal, closeModal, isSignUpOpen, SignUpModalRef }) {
         // 로그인된 사용자 닉네임이 있으면 표시
         <StHeaderBtn
           onClick={() => {
-            navigate(`/mypage`);
+            navigate(`/mypage/${auth.currentUser.uid}`);
           }}
         >
           {currentUser}
