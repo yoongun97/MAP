@@ -3,15 +3,10 @@ import { styled } from 'styled-components';
 
 const breakpoint800 = '800px';
 const breakpoint1200 = '1200px';
-const breakpoint1600 = '1600px';
 
 export const mainContainer = styled.div`
   display: flex;
-  height: 100vh;
-  @media (max-width: ${breakpoint800}) {
-    flex-direction: column;
-  }
-  overflow: hidden;
+  height: 100%;
 `;
 
 export const mainLeftContainer = styled.div`
@@ -21,6 +16,7 @@ export const mainLeftContainer = styled.div`
   align-items: center;
   width: 35%;
 
+  position: absolute;
   @media (max-width: ${breakpoint800}) {
     justify-content: center; /* 가로 정렬 */
     align-items: center; /* 세로 정렬 */
@@ -35,6 +31,8 @@ export const mainTextDiv = styled.div`
 export const mainSubtitleDiv = styled.div`
   font-size: 1.5rem;
   text-align: center;
+  color: white;
+
   @media (max-width: ${breakpoint1200}) {
     font-size: 1rem;
   }
@@ -46,6 +44,7 @@ export const mainSubtitleDiv = styled.div`
 export const mainTitleDiv = styled.div`
   font-size: 7rem;
   text-align: center;
+  color: white;
 
   @media (max-width: ${breakpoint1200}) {
     font-size: 5rem;
@@ -73,14 +72,9 @@ export const mainStartButton = styled.button`
   }
 `;
 
-export const mainRightContainer = styled.div`
-  width: 65%;
-  height: 100%;
-  background-color: grey;
-`;
-
 export const mainVideo = styled.video`
   height: 100%;
+  z-index: -1;
 `;
 
 export const mainNav = styled.div`

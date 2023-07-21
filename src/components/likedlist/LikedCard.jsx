@@ -22,10 +22,10 @@ function LikedCard() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user.uid);
+      console.log(user?.uid);
     });
   }, []);
-  console.log('curUser', currentUser.uid);
+  console.log('curUser', currentUser?.uid);
 
   return (
     <div>
