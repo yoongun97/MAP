@@ -16,6 +16,7 @@ const StHeader = styled.header`
   padding: 24px;
   background-color: #2f2b6d;
   color: white;
+  transition: opacity 0.3 ease;
 `;
 
 const StLogo = styled.div`
@@ -36,7 +37,7 @@ const StFooter = styled.div`
 `;
 
 const StContent = styled.div`
-  ${({ view }) => view && 'opacity: 0.3'}; // 모달이 열렸을 때 투명도 변경
+  ${({ $view }) => $view && 'opacity: 0.3'}; // 모달이 열렸을 때 투명도 변경
   margin-top: 73px;
 `;
 
@@ -44,6 +45,26 @@ function Layout() {
   const navigate = useNavigate();
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
+  const [headerOpacity, setHeaderOpacity] = useState(1); // 헤더 투명도 상태 추가
+  const scrollTimeoutRef = useRef(null); // 스크롤 타임아웃 참조 추가
+
+  useEffect(() => {
+    const handleScroll = () => {
+      clearTimeout(scrollTimeoutRef.current);
+      setHeaderOpacity(0.7); // 스크롤 중에는 투명도를 0.7로 설정
+      scrollTimeoutRef.current = setTimeout(() => {
+        setHeaderOpacity(1); // 스크롤이 멈추면 투명도를 1로 설정
+      }, 50);
+    };
+
+    // 스크롤 이벤트 리스너 등록
+    window.addEventListener('scroll', handleScroll);
+
+    // 컴포넌트가 언마운트될 때 스크롤 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // 모달 외부영역 참조
   const SignUpModalRef = useRef(null);
@@ -93,7 +114,7 @@ function Layout() {
         boxSizing: 'border-box'
       }}
     >
-      <StHeader>
+      <StHeader style={{ opacity: headerOpacity }}>
         <StLogo
           onClick={() => {
             navigate('/list');
@@ -123,7 +144,7 @@ function Layout() {
           />
         </div>
       </StHeader>
-      <StContent view={isSignUpOpen || isLogInOpen}>
+      <StContent $view={isSignUpOpen || isLogInOpen}>
         <Outlet />
       </StContent>
       <StFooter>

@@ -1,65 +1,119 @@
 import { React, useEffect, useState, useCallback, useRef } from 'react';
 import * as S from './StyledDetail';
-import styled from 'styled-components';
-import { items } from '../../constant/items';
-import { onClickSpotCreateMarker } from '../../api/kakao';
+import { getPlacesForKakao, onClickSpotCreateMarker } from '../../api/kakao';
 import noImage from '../../assets/noimage.png';
-import { getPlaces } from '../../api/tourPlaces';
 import { ReactComponent as Spinner } from '../../assets/Spinner.svg';
 import useInfiniteScoll from '../../hooks/useInfiniteScroll';
-import { useParams } from 'react-router';
-import { getDetailPlaceData } from '../../api/places';
-function List() {
-  const { placeId } = useParams();
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsMarkedMarked } from '../../redux/modules/kakao';
+import { fecthTourPlaces, fecthTourPlacesBasedAreaCode, setPlace } from '../../redux/modules/tourPlaces';
+
+function List({ place }) {
   const ref = useRef(null);
+  const dispatch = useDispatch();
+
+  const { tourPlaces, loading, nothing } = useSelector((state) => state.tourPlacesReducer);
+  const { kakao, kakaoLoading, isMarked, isMarkedMarked } = useSelector((state) => state.kakaoReducer);
 
   const [page, setPage] = useState(1);
 
+  const markMap = () => {
+    setPage(() => {
+      return 1;
+    });
+    dispatch(setPlace([]));
+  };
+
+  if (isMarked && !isMarkedMarked) {
+    markMap();
+    dispatch(setIsMarkedMarked());
+  }
+
   const increasePage = useCallback(() => {
-    setPage(page + 1);
+    setPage((prev) => {
+      return prev + 1;
+    });
   });
+
   const [observe, unobserve] = useInfiniteScoll(increasePage);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const placeData = await getDetailPlaceData(placeId);
-      console.log(placeData);
-    };
-  }, []);
+    unobserve(ref.current);
+    markMap();
+  }, [kakao]);
 
   useEffect(() => {
-    //fetch하는 로직
-  }, [page]);
+    const fetchPlaces = () => {
+      dispatch(
+        fecthTourPlaces({
+          contentTypeId: '12',
+          arrange: 'A',
+          mapX: kakao.mapX,
+          mapY: kakao.mapY,
+          radius: '5000',
+          pageNo: page,
+          ob: () => observe(ref.current),
+          unob: () => unobserve(ref.current)
+        })
+      );
+    };
+
+    const fetchPlacesBasedAreaCode = () => {
+      dispatch(
+        fecthTourPlacesBasedAreaCode({
+          contentTypeId: '12',
+          arrange: 'A',
+          areaCode: place.areaCode,
+          sigunguCode: place.sigunguCode,
+          pageNo: page,
+          ob: () => observe(ref.current),
+          unob: () => unobserve(ref.current)
+        })
+      );
+    };
+
+    if (!isMarked) {
+      fetchPlacesBasedAreaCode();
+    } else {
+      fetchPlaces();
+      // getPlacesForKakao(tourPlaces);
+    }
+  }, [page, isMarked, kakao]);
 
   return (
     <S.detailPlaceList>
+      <div className="rec-div">
+        <p>추천장소</p>
+      </div>
       <S.spotList>
-        <>
-          {items.map((item) => {
-            return (
-              <S.spotCard
-                key={item.contentid}
-                onClick={() => onClickSpotCreateMarker(item.mapy, item.mapx, item.title)}
-              >
-                <S.spotImage>
-                  {item.firstimage ? (
-                    <img src={item.firstimage} alt="명소 이미지" />
-                  ) : (
-                    <img src={noImage} alt="이미지 없음" />
-                  )}
-                </S.spotImage>
-                <div>
-                  <S.StTitle>{item.title}</S.StTitle>
-                  <S.StDesc>{item.addr1}</S.StDesc>
-                </div>
-              </S.spotCard>
-            );
-          })}
-          <Spinner ref={ref} />
-        </>
+        {tourPlaces.length > 1
+          ? tourPlaces.map((item) => {
+              return (
+                <S.spotCard
+                  key={item.contentid}
+                  onClick={() => onClickSpotCreateMarker(item.mapy, item.mapx, item.title)}
+                >
+                  <S.spotImage>
+                    {item.firstimage ? (
+                      <img src={item.firstimage} alt="명소 이미지" />
+                    ) : (
+                      <img src={noImage} alt="이미지 없음" />
+                    )}
+                  </S.spotImage>
+                  <div>
+                    <S.StTitle>{item.title}</S.StTitle>
+                    <S.StDesc>{item.addr1}</S.StDesc>
+                  </div>
+                </S.spotCard>
+              );
+            })
+          : nothing && <>없습니다</>}
+
+        <div className="ob-div" ref={ref}>
+          {loading && <Spinner />}
+        </div>
       </S.spotList>
     </S.detailPlaceList>
   );
 }
-
 export default List;

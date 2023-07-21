@@ -15,7 +15,7 @@ function Router() {
         <Route element={<Layout />}>
           <Route path="/list" element={<ListPage />} />
           <Route path="/:placeId" element={<DetailPage />} />
-          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/:uid" element={<MyPage />} />
         </Route>
       </Routes>
     </>
