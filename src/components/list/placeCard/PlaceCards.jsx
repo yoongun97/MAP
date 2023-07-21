@@ -16,7 +16,6 @@ const PlaceCards = () => {
     }
   });
 
-
   const currentUser = auth.currentUser?.uid;
 
   return (
