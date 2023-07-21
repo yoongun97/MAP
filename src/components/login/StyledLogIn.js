@@ -55,7 +55,7 @@ export const StModalBtn = styled.button`
   width: 240px;
   height: 40px;
   margin-bottom: 10px;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.$backgroundColor};
   border: none;
   cursor: pointer;
   color: white;
