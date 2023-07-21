@@ -75,32 +75,28 @@ function List({ place }) {
         <p>추천장소</p>
       </div>
       <S.spotList>
-        {tourPlaces.length > 1 ? (
-          tourPlaces.map((item) => {
-            return (
-              <S.spotCard
-                key={item.contentid}
-                onClick={() => onClickSpotCreateMarker(item.mapy, item.mapx, item.title)}
-              >
-                <S.spotImage>
-                  {item.firstimage ? (
-                    <img src={item.firstimage} alt="명소 이미지" />
-                  ) : (
-                    <img src={noImage} alt="이미지 없음" />
-                  )}
-                </S.spotImage>
-                <div>
-                  <S.StTitle>{item.title}</S.StTitle>
-                  <S.StDesc>{item.addr1}</S.StDesc>
-                </div>
-              </S.spotCard>
-            );
-          })
-        ) : nothing ? (
-          <>없습니다</>
-        ) : (
-          <></>
-        )}
+        {tourPlaces.length > 1
+          ? tourPlaces.map((item) => {
+              return (
+                <S.spotCard
+                  key={item.contentid}
+                  onClick={() => onClickSpotCreateMarker(item.mapy, item.mapx, item.title)}
+                >
+                  <S.spotImage>
+                    {item.firstimage ? (
+                      <img src={item.firstimage} alt="명소 이미지" />
+                    ) : (
+                      <img src={noImage} alt="이미지 없음" />
+                    )}
+                  </S.spotImage>
+                  <div>
+                    <S.StTitle>{item.title}</S.StTitle>
+                    <S.StDesc>{item.addr1}</S.StDesc>
+                  </div>
+                </S.spotCard>
+              );
+            })
+          : nothing && <>없습니다</>}
 
         <div className="ob-div" ref={ref}>
           {loading && <Spinner />}

@@ -5,11 +5,9 @@ export const detailContainer = styled.div`
   gap: 15px;
   width: 100%;
   height: 60vh;
-  justify-content: center;
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  justify-content: space-between;
+  position: relative;
+  /* margin-top: 100px; */
 `;
 export const detailBox = styled.div`
   border: 1px solid black;
@@ -17,8 +15,8 @@ export const detailBox = styled.div`
 `;
 
 export const detailKakaoMap = styled.div`
-  width: 40%;
-  height: 100%;
+  width: 70%;
+  height: 100vh;
 `;
 
 export const detailPlaceList = styled.div`
@@ -66,7 +64,6 @@ export const StDesc = styled.p`
 `;
 export const spotCard = styled.li`
   box-shadow: 0 2px 10px rgba(0, 100, 255, 0.2);
-  backdrop-filter: blur(4px);
   background: white;
   border-radius: 4px;
   margin: 16px 8px !important;
@@ -79,9 +76,65 @@ export const spotCard = styled.li`
 `;
 
 export const spotImage = styled.div`
+  backdrop-filter: blur(4px);
   img {
     min-width: 50px;
     width: 4.5vw;
     aspect-ratio: 1;
+  }
+`;
+export const toggleBtn = styled.button`
+  position: fixed;
+  right: 0;
+  height: 30px;
+  z-index: 1;
+  margin: 5px;
+  background-color: white;
+  border: 1px solid rgba(0, 100, 255, 0.2);
+  border-radius: 7px;
+  box-shadow: 0 3px 10px rgba(0, 100, 255, 0.2);
+`;
+export const planningBox = styled.div`
+  .planning-box {
+    display: ${(props) => {
+      return props.$view ? 'block' : 'none';
+    }}; /* 초기에 댓글창 숨김 */
+    position: fixed;
+    bottom: 0;
+    width: 75%;
+    height: 70vh;
+    left: 0;
+    /* border: 1px solid black; */
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 10px rgba(0, 100, 255, 0.2);
+    z-index: 9;
+  }
+  .planning-box.slide-in {
+    animation: slideIn 0.5s forwards;
+  }
+  .planning-box.slide-out {
+    animation: slideOut 0.5s forwards;
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slideOut {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
   }
 `;
