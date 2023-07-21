@@ -1,8 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as S from './StyledMain';
-import video from '../../assets/video/seoul.mp4';
+import video from '../../assets/video/mainVideo.mp4';
 import { Link } from 'react-router-dom';
 const Main = () => {
+  useEffect(() => {
+    // 스크롤 막기
+    document.body.style.overflow = 'hidden'; // 스크롤바를 없앰
+    document.addEventListener('touchmove', disableScroll, { passive: false }); // 모바일 터치 스크롤 막기
+
+    return () => {
+      // 컴포넌트가 언마운트될 때 스크롤 막기 해제
+      document.body.style.overflow = 'auto'; // 스크롤바를 보이게 함
+      document.removeEventListener('touchmove', disableScroll); // 모바일 터치 스크롤 막기 해제
+    };
+  }, []);
+
+  const disableScroll = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <S.mainContainer>
       <S.mainLeftContainer>
@@ -18,12 +34,10 @@ const Main = () => {
           </Link>
         </S.mainTextDiv>
       </S.mainLeftContainer>
-      <S.mainRightContainer>
-        <S.mainVideo autoPlay loop muted>
-          <source src={video} type="video/mp4" />
-          Your browser does not support the video tag.
-        </S.mainVideo>
-      </S.mainRightContainer>
+      <S.mainVideo autoPlay loop muted>
+        <source src={video} type="video/mp4" />
+        Your browser does not support the video tag.
+      </S.mainVideo>
     </S.mainContainer>
   );
 };

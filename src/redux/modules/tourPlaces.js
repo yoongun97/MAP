@@ -20,7 +20,7 @@ export const fecthTourPlacesBasedAreaCode = createAsyncThunk(
   async ({ contentTypeId, areaCode, sigunguCode, arrange, pageNo, ob, unob }, thunkAPI) => {
     try {
       const res = await getPlacesAreaBased(contentTypeId, areaCode, sigunguCode, arrange, pageNo);
-      console.log(res);
+
       return thunkAPI.fulfillWithValue({ res: res, ob: ob, unob: unob });
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -48,8 +48,6 @@ const tourPlaceSlice = createSlice({
         state.loading = true;
         state.error = null;
         state.nothing = false;
-        console.log('1');
-        console.log(state.tourPlaces);
       })
       .addCase(fecthTourPlaces.fulfilled, (state, action) => {
         state.loading = false;
@@ -57,19 +55,11 @@ const tourPlaceSlice = createSlice({
         let dupRemovedArr = [...new Map(dupArr.map((tourPlace) => [tourPlace.contentid, tourPlace])).values()];
         action.payload.unob();
         state.tourPlaces = dupRemovedArr;
-        console.log('2');
-        console.log(state.tourPlaces);
-        if (state.tourPlaces.length > 0) {
-          action.payload.ob();
-        } else {
-          state.nothing = true;
-        }
+        action.payload.ob();
       })
       .addCase(fecthTourPlaces.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-        console.log('3');
-        console.log(state.tourPlaces);
         state.nothing = true;
       })
 
@@ -81,7 +71,7 @@ const tourPlaceSlice = createSlice({
         state.loading = false;
         let dupArr = [...state.tourPlaces, ...action.payload.res];
         let dupRemovedArr = [...new Map(dupArr.map((tourPlace) => [tourPlace.contentid, tourPlace])).values()];
-        console.log(dupRemovedArr);
+
         action.payload.unob();
         state.tourPlaces = dupRemovedArr;
         action.payload.ob();

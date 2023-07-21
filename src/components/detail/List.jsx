@@ -1,6 +1,6 @@
 import { React, useEffect, useState, useCallback, useRef } from 'react';
 import * as S from './StyledDetail';
-import { getPlacesForKakao, onClickSpotCreateMarker } from '../../api/kakao';
+import { onClickSpotCreateMarker } from '../../api/kakao';
 import noImage from '../../assets/noimage.png';
 import { ReactComponent as Spinner } from '../../assets/Spinner.svg';
 import useInfiniteScoll from '../../hooks/useInfiniteScroll';
@@ -76,7 +76,6 @@ function List({ place }) {
       fetchPlacesBasedAreaCode();
     } else {
       fetchPlaces();
-      // getPlacesForKakao(tourPlaces);
     }
   }, [page, isMarked, kakao]);
 
