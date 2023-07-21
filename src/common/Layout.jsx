@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
@@ -6,6 +6,11 @@ import SignUp from '../components/signup/SignUp';
 import LogIn from '../components/login/LogIn';
 
 const StHeader = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
   display: flex;
   justify-content: space-between;
   padding: 24px;
@@ -31,13 +36,36 @@ const StFooter = styled.div`
 `;
 
 const StContent = styled.div`
-  ${({ $view }) => $view && 'opacity: 0.3;'}// 모달이 열렸을 때 투명도 변경
+  ${({ $view }) => $view && 'opacity: 0.3'}; // 모달이 열렸을 때 투명도 변경
+  margin-top: 73px;
 `;
 
 function Layout() {
   const navigate = useNavigate();
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isLogInOpen, setIsLogInOpen] = useState(false);
+
+  // 모달 외부영역 참조
+  const SignUpModalRef = useRef(null);
+  const LogInModalRef = useRef(null);
+
+  // 외부 영역 클릭 이벤트
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (SignUpModalRef.current && !SignUpModalRef.current.contains(event.target)) {
+        setIsSignUpOpen(false);
+      }
+      if (LogInModalRef.current && !LogInModalRef.current.contains(event.target)) {
+        setIsLogInOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // 모달 여닫기
   // 로그인, 회원가입 모달이 동시에 존재하지 않게
@@ -81,11 +109,21 @@ function Layout() {
             gap: '12px'
           }}
         >
-          <LogIn openModal={openLogInModal} closeModal={closeModal} isLogInOpen={isLogInOpen} />
-          <SignUp openModal={openSignUpModal} closeModal={closeModal} isSignUpOpen={isSignUpOpen} />
+          <LogIn
+            openModal={openLogInModal}
+            closeModal={closeModal}
+            isLogInOpen={isLogInOpen}
+            LogInModalRef={LogInModalRef}
+          />
+          <SignUp
+            openModal={openSignUpModal}
+            closeModal={closeModal}
+            isSignUpOpen={isSignUpOpen}
+            SignUpModalRef={SignUpModalRef}
+          />
         </div>
       </StHeader>
-      <StContent $view={isSignUpOpen || isLogInOpen}>
+      <StContent view={isSignUpOpen || isLogInOpen}>
         <Outlet />
       </StContent>
       <StFooter>

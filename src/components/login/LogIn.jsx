@@ -18,7 +18,7 @@ import {
   StModalBtns
 } from './StyledLogIn';
 
-function LogIn({ openModal, closeModal, isLogInOpen }) {
+function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -102,7 +102,7 @@ function LogIn({ openModal, closeModal, isLogInOpen }) {
         <StHeaderBtn onClick={openLogInModal}>로그인</StHeaderBtn>
       )}
       {isLogInOpen && (
-        <StModal>
+        <StModal ref={LogInModalRef}>
           <StModalTitle>
             <StModalTitleL>LOG IN</StModalTitleL>
             <StModalTitleS>지역기반 여행 가이드</StModalTitleS>
