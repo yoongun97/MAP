@@ -1,33 +1,40 @@
 import { React, useEffect, useState, useCallback, useRef } from 'react';
 import * as S from './StyledDetail';
-import { onClickSpotCreateMarker } from '../../api/kakao';
+import { getPlacesForKakao, onClickSpotCreateMarker } from '../../api/kakao';
 import noImage from '../../assets/noimage.png';
 import { ReactComponent as Spinner } from '../../assets/Spinner.svg';
 import useInfiniteScoll from '../../hooks/useInfiniteScroll';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsMarkedMarked } from '../../redux/modules/kakao';
 import { fecthTourPlaces, fecthTourPlacesBasedAreaCode, setPlace } from '../../redux/modules/tourPlaces';
+
 function List({ place }) {
+  const ref = useRef(null);
   const dispatch = useDispatch();
+
   const { tourPlaces, loading, nothing } = useSelector((state) => state.tourPlacesReducer);
   const { kakao, kakaoLoading, isMarked, isMarkedMarked } = useSelector((state) => state.kakaoReducer);
-  const ref = useRef(null);
+
   const [page, setPage] = useState(1);
+
   const markMap = () => {
-    setPage((prev) => {
+    setPage(() => {
       return 1;
     });
     dispatch(setPlace([]));
   };
+
   if (isMarked && !isMarkedMarked) {
     markMap();
     dispatch(setIsMarkedMarked());
   }
+
   const increasePage = useCallback(() => {
     setPage((prev) => {
       return prev + 1;
     });
   });
+
   const [observe, unobserve] = useInfiniteScoll(increasePage);
 
   useEffect(() => {
@@ -50,6 +57,7 @@ function List({ place }) {
         })
       );
     };
+
     const fetchPlacesBasedAreaCode = () => {
       dispatch(
         fecthTourPlacesBasedAreaCode({
@@ -63,9 +71,12 @@ function List({ place }) {
         })
       );
     };
-    if (!isMarked) fetchPlacesBasedAreaCode();
-    if (isMarked) {
+
+    if (!isMarked) {
+      fetchPlacesBasedAreaCode();
+    } else {
       fetchPlaces();
+      // getPlacesForKakao(tourPlaces);
     }
   }, [page, isMarked, kakao]);
 

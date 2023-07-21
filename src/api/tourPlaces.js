@@ -12,7 +12,7 @@ import api from './index';
 export async function getPlaces(contentTypeId, arrange, radius, mapX, mapY, pageNo) {
   const res = await api.get('/locationBasedList1', {
     params: {
-      ServiceKey: '1HhXMaFJA8upZ2e83fs8otwyYyB40nn64bm9cw1V+4PjoV4bkdwBSWLh44xCIyBi1oZIvFTCsehf1+kOqsUHqg==',
+      ServiceKey: process.env.REACT_APP_TOUR_KEY,
       contentTypeId: contentTypeId,
       arrange: arrange,
       radius: radius,
@@ -39,7 +39,7 @@ export async function getPlaces(contentTypeId, arrange, radius, mapX, mapY, page
 export async function getPlacesAreaBased(contentTypeId, areaCode, sigunguCode, arrange, pageNo) {
   const res = await api.get('/areaBasedList1', {
     params: {
-      ServiceKey: '1HhXMaFJA8upZ2e83fs8otwyYyB40nn64bm9cw1V+4PjoV4bkdwBSWLh44xCIyBi1oZIvFTCsehf1+kOqsUHqg==',
+      ServiceKey: process.env.REACT_APP_TOUR_KEY,
       areaCode: areaCode,
       contentTypeId: contentTypeId,
       sigunguCode: sigunguCode,
