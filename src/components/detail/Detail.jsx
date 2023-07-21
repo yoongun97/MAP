@@ -37,8 +37,8 @@ const Detail = () => {
     <S.detailContainer>
       <S.detailBox>상세 페이지</S.detailBox>
       <KakaoMap />
-      {/* <button onClick={() => allMarkers()}>초기화</button> */}
-      <List place={place} />
+      <button onClick={() => allMarkers()}>초기화</button>
+      {place && <List place={place} />}
     </S.detailContainer>
   );
 };

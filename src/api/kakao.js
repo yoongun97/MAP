@@ -1,9 +1,11 @@
 import { items } from '../constant/items';
+import { fetchkakao } from '../redux/modules/kakao';
+import store from '../redux/config/configStore';
 // onLoadKakaoMap 함수 밖에서 사용할 수 있도록 선언
 let map;
 let marker;
-let positionX;
-let positionY;
+// let positionX;
+// let positionY;
 
 // 마커 배열
 let markers = [];
@@ -134,12 +136,7 @@ export const onLoadKakaoMap = (mapY, mapX) => {
       addMarker(latlng);
 
       // 확인 및 다른 컴포넌트에서 필요할 경우 사용하는 positionX와 positionY
-      positionY = latlng.getLat();
-      positionX = latlng.getLng();
-      let message = '클릭한 위치의 위도는 ' + positionY + ' 이고, ';
-      message += '경도는 ' + positionX + ' 입니다';
-
-      alert(message);
+      store.dispatch(fetchkakao(latlng));
     });
   });
 };
