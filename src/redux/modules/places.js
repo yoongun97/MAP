@@ -17,6 +17,7 @@ const places = createSlice({
       }
     },
     sortPlaces(state, action) {
+      console.log(state.slice());
       switch (action.payload) {
         case '좋아요순':
           return state.slice().sort((a, b) => b.likes - a.likes);
