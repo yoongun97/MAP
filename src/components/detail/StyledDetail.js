@@ -23,7 +23,7 @@ export const detailKakaoMap = styled.div`
 
 export const detailPlaceList = styled.div`
   border-radius: 10px;
-  background: rgba(31, 38, 135, 0.05);
+  background: rgba(31, 38, 135, 0.02);
   width: 20%;
   display: flex;
   justify-content: space-between;
