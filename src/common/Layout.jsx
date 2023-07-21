@@ -54,7 +54,7 @@ function Layout() {
       setHeaderOpacity(0.7); // 스크롤 중에는 투명도를 0.7로 설정
       scrollTimeoutRef.current = setTimeout(() => {
         setHeaderOpacity(1); // 스크롤이 멈추면 투명도를 1로 설정
-      }, 20);
+      }, 50);
     };
 
     // 스크롤 이벤트 리스너 등록

@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './StyledDetail';
-import noImage from '../../assets/noimage.png';
 import KakaoMap from './KakaoMap';
-import { onClickSpotCreateMarker, onLoadKakaoMap, allMarkers } from '../../api/kakao';
-import { items } from '../../constant/items';
+import { onLoadKakaoMap, allMarkers } from '../../api/kakao';
 import List from './List';
+import { getDetailPlaceData } from '../../api/places';
+import { useParams } from 'react-router-dom';
+
 const Detail = () => {
+  const { placeId } = useParams();
+  const [place, setPlace] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getDetailPlaceData(placeId);
+      setPlace(data);
+    };
+    fetchData();
+  }, []);
+
   // script를 만들어 kakao api를 받아온다.
   const mapScript = document.createElement('script');
 
@@ -15,14 +27,18 @@ const Detail = () => {
   document.head.appendChild(mapScript);
 
   // mapScript가 로드되면 onLoadKakaoMap 실행
-  mapScript.addEventListener('load', onLoadKakaoMap);
+  mapScript.addEventListener('load', () => {
+    if (place) {
+      onLoadKakaoMap(place.mapY, place.mapX);
+    }
+  });
 
   return (
     <S.detailContainer>
       <S.detailBox>상세 페이지</S.detailBox>
       <KakaoMap />
-      {/* <button onClick={() => allMarkers()}>초기화</button> */}
-      <List />
+      <button onClick={() => allMarkers()}>초기화</button>
+      <List place={place} />
     </S.detailContainer>
   );
 };

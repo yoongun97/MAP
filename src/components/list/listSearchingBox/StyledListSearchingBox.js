@@ -63,7 +63,7 @@ export const LSB = {
 
       .dropdown {
         position: absolute;
-        display: ${(props) => (props.$view === 'true' ? 'block' : 'none')};
+        display: ${({ $view }) => ($view === 'true' ? 'block' : 'none')};
         width: 150px;
         padding: 10px;
         margin: 140px 0 0 0;

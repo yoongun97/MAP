@@ -7,17 +7,61 @@ let positionY;
 
 // 마커 배열
 let markers = [];
+let isMarkers = [];
 
-// 마커 세팅, 기존 값 초기화에 사용.
-const setMarkers = (map) => {
+// 마커 세팅. 마커를 안보이게 하는데 사용.
+const resetMarkers = (map) => {
   markers.forEach((marker) => {
+    // 지도에서 찍힌 마커를 안보이게 한다.
     marker.setMap(map);
   });
+  markers = [];
+  isMarkers = [];
+};
+
+// 아이템의 마커가 있는 상태에서 마커 클릭 시 마커 지우기
+const deleteMarker = (title) => {
+  let filteringIndex;
+  isMarkers.forEach((marker, index) => {
+    if (marker === title) {
+      filteringIndex = index;
+      markers[index].setMap(null);
+    }
+  });
+  isMarkers = isMarkers.filter((_, index) => index !== filteringIndex);
+  markers = markers.filter((_, index) => index !== filteringIndex);
+};
+
+// 마커를 추가하는 함수
+const addMarker = (position, infowindow, markerImage, title) => {
+  markerImage
+    ? (marker = new window.kakao.maps.Marker({
+        position: position,
+        image: markerImage
+      }))
+    : (marker = new window.kakao.maps.Marker({
+        position: position
+      }));
+
+  // mouseover : openInfoWindow
+  // mouseout  : closeInfoWindow
+  if (infowindow) {
+    openInfoWindow(marker, infowindow);
+    closeInfoWindow(marker, infowindow);
+  }
+
+  // 마커가 지도 위에 표시되도록 설정합니다
+  marker.setMap(map);
+
+  // 생성된 마커를 배열에 추가합니다
+  markers.push(marker);
+  isMarkers.push(title);
+  return marker;
 };
 
 export const allMarkers = () => {
   const kakao = window.kakao;
-  setMarkers(null);
+  resetMarkers(null);
   items.forEach((item) => {
     // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
     const iwContent = `<div style="padding:5px;">${item.title}</div>`;
@@ -57,32 +101,7 @@ const closeInfoWindow = (marker, infowindow) => {
   });
 };
 
-// 마커를 추가하는 함수
-const addMarker = (position, infowindow, markerImage) => {
-  markerImage
-    ? (marker = new window.kakao.maps.Marker({
-        position: position,
-        image: markerImage
-      }))
-    : (marker = new window.kakao.maps.Marker({
-        position: position
-      }));
-
-  // mouseover : openInfoWindow
-  // mouseout  : closeInfoWindow
-  if (infowindow) {
-    openInfoWindow(marker, infowindow);
-    closeInfoWindow(marker, infowindow);
-  }
-
-  // 마커가 지도 위에 표시되도록 설정합니다
-  marker.setMap(map);
-
-  // 생성된 마커를 배열에 추가합니다
-  markers.push(marker);
-};
-
-export const onLoadKakaoMap = () => {
+export const onLoadKakaoMap = (mapY, mapX) => {
   // window에서 전역객체 kakao를 가져온다.
   const kakao = window.kakao;
 
@@ -92,7 +111,7 @@ export const onLoadKakaoMap = () => {
   kakao.maps.load(() => {
     const mapContainer = document.getElementById('map');
     const mapOption = {
-      center: new kakao.maps.LatLng(33.488827746197295, 126.49822966114715), // 지도의 중심좌표
+      center: new kakao.maps.LatLng(mapY, mapX), // 지도의 중심좌표
       level: 6 // 지도의 확대 레벨
     };
 
@@ -103,7 +122,7 @@ export const onLoadKakaoMap = () => {
     // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출
     kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
       // 초기에 보여주던 마커들을 삭제합니다
-      setMarkers(null);
+      resetMarkers(null);
 
       // 클릭한 위도, 경도 정보를 가져옵니다
       const latlng = mouseEvent.latLng;
@@ -115,10 +134,10 @@ export const onLoadKakaoMap = () => {
       addMarker(latlng);
 
       // 확인 및 다른 컴포넌트에서 필요할 경우 사용하는 positionX와 positionY
-      positionX = latlng.getLat();
-      positionY = latlng.getLng();
-      let message = '클릭한 위치의 위도는 ' + positionX + ' 이고, ';
-      message += '경도는 ' + positionY + ' 입니다';
+      positionY = latlng.getLat();
+      positionX = latlng.getLng();
+      let message = '클릭한 위치의 위도는 ' + positionY + ' 이고, ';
+      message += '경도는 ' + positionX + ' 입니다';
 
       alert(message);
     });
@@ -130,25 +149,31 @@ export const onClickSpotCreateMarker = (lat, lng, title) => {
   if (!map) return; // map이 초기화되지 않았을 경우 처리
 
   // 이미 마커가 생성된 경우 삭제
-  if (marker) {
-    setMarkers(null);
+
+  if (isMarkers.filter((marker) => marker === title)[0]) {
+    deleteMarker(title);
+    return;
+  } else {
+    const latlng = new window.kakao.maps.LatLng(lat, lng);
+
+    // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    const iwContent = `<div style="padding:5px;">${title}</div>`;
+
+    // 인포윈도우를 생성합니다
+    const infowindow = new window.kakao.maps.InfoWindow({
+      content: iwContent
+    });
+
+    // 마커 생성
+    addMarker(latlng, infowindow, '', title);
+
+    // console.log(markers);
+    // 지도 중심을 부드럽게 이동
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동
+    map.panTo(latlng);
   }
-
+  // console.log(markers);
   // 위도와 경도를 받아 설정
-  const latlng = new window.kakao.maps.LatLng(lat, lng);
 
-  // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-  const iwContent = `<div style="padding:5px;">${title}</div>`;
-
-  // 인포윈도우를 생성합니다
-  const infowindow = new window.kakao.maps.InfoWindow({
-    content: iwContent
-  });
-
-  // 마커 생성
-  addMarker(latlng, infowindow);
-
-  // 지도 중심을 부드럽게 이동
-  // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동
-  map.panTo(latlng);
+  console.log('종료 > ', markers);
 };

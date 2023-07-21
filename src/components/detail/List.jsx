@@ -1,6 +1,5 @@
 import { React, useEffect, useState, useCallback, useRef } from 'react';
 import * as S from './StyledDetail';
-import { items } from '../../constant/items';
 import { onClickSpotCreateMarker } from '../../api/kakao';
 import noImage from '../../assets/noimage.png';
 import { ReactComponent as Spinner } from '../../assets/Spinner.svg';
