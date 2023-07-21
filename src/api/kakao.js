@@ -1,4 +1,5 @@
 import { fakeDispatch, fetchkakao } from '../redux/modules/kakao';
+import { getPlaces } from './tourPlaces';
 import store from '../redux/config/configStore';
 
 // onLoadKakaoMap 함수 밖에서 사용할 수 있도록 선언
@@ -65,25 +66,29 @@ const addMarker = (position, infowindow, markerImage, title) => {
 };
 
 // 지도 클릭 시 주변 관광지 마커 보이기
-export const allMarkers = () => {
+export const allMarkers = async (latlng) => {
   resetMarkers(null);
 
   const kakao = window.kakao;
-  const places = store.getState().tourPlacesReducer.tourPlaces;
-  places.forEach((place) => {
-    // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    const iwContent = `<div style="padding:5px;">${place.title}</div>`;
+  const places = await getPlaces('12', 'A', '5000', latlng.getLng(), latlng.getLat(), 1);
+  try {
+    places.forEach((place) => {
+      // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+      const iwContent = `<div style="padding:5px;">${place.title}</div>`;
 
-    // 인포윈도우를 생성합니다
-    const infowindow = new kakao.maps.InfoWindow({
-      content: iwContent
+      // 인포윈도우를 생성합니다
+      const infowindow = new kakao.maps.InfoWindow({
+        content: iwContent
+      });
+
+      // 마커를 생성합니다
+      const latlng = new kakao.maps.LatLng(place.mapy, place.mapx);
+
+      addMarker(latlng, infowindow);
     });
-
-    // 마커를 생성합니다
-    const latlng = new kakao.maps.LatLng(place.mapy, place.mapx);
-
-    addMarker(latlng, infowindow);
-  });
+  } catch (e) {
+    return;
+  }
 };
 
 // 마커에 마우스오버 이벤트 등록
@@ -136,12 +141,11 @@ export const onLoadKakaoMap = (mapY, mapX) => {
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
       // 확인 및 다른 컴포넌트에서 필요할 경우 사용하는 positionX와 positionY
+
       store.dispatch(fetchkakao(latlng));
-      store.dispatch(fakeDispatch());
 
       // 클릭한 위치를 기반으로 근처 item들의 마커를 보여줍니다.
-      allMarkers();
-
+      allMarkers(latlng);
       // 마커 위치를 클릭한 위치로 옮깁니다
       addMarker(latlng, '', markerImage);
     });
