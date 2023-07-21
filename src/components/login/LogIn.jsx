@@ -102,10 +102,9 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   };
 
   // Google 로그인
-  // const LogInByGoogle = () => {
-  //   const provider = new GoogleAuthProvider();
-
-  // }
+  const LogInByGoogle = () => {
+    const provider = new GoogleAuthProvider();
+  };
 
   return (
     <>
@@ -135,10 +134,10 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
 
           <StWarnMent>{errorMessage}</StWarnMent>
           <StModalBtns>
-            <StModalBtn backgroundColor="#474688" onClick={signIn}>
+            <StModalBtn $backgroundColor="#474688" onClick={signIn}>
               로그인
             </StModalBtn>
-            <StModalBtn backgroundColor="#F55150" onClick={closeLogInModal}>
+            <StModalBtn $backgroundColor="#F55150" onClick={closeLogInModal}>
               뒤로가기
             </StModalBtn>
           </StModalBtns>

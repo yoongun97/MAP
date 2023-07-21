@@ -230,10 +230,10 @@ function SignUp({ openModal, closeModal, isSignUpOpen, SignUpModalRef }) {
           />
           {showPasswordMismatch && <StWarnMent>비밀번호가 일치하지 않습니다.</StWarnMent>}
           <StModalBtns>
-            <StModalBtn backgroundColor="#474688" onClick={signUp}>
+            <StModalBtn $backgroundColor="#474688" onClick={signUp}>
               회원가입
             </StModalBtn>
-            <StModalBtn backgroundColor="#F55150" onClick={closeSignUpModal}>
+            <StModalBtn $backgroundColor="#F55150" onClick={closeSignUpModal}>
               뒤로가기
             </StModalBtn>
           </StModalBtns>
