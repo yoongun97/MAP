@@ -25,7 +25,6 @@ const getPlaceData = async () => {
 };
 
 const getDetailPlaceData = async (id) => {
-  console.log(id);
   const docRef = doc(db, 'places', id);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
