@@ -36,7 +36,7 @@ const StFooter = styled.div`
 `;
 
 const StContent = styled.div`
-  ${({ $view }) => $view && 'opacity: 0.3'}; // 모달이 열렸을 때 투명도 변경
+  ${({ $view }) => $view && 'filter: blur(5px);'}; // 모달이 열렸을 때 투명도와 backdrop 효과 적용
   margin-top: 73px;
 `;
 
