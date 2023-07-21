@@ -55,6 +55,9 @@ function List() {
 
   return (
     <S.detailPlaceList>
+      <div className="rec-div">
+        <p>추천장소</p>
+      </div>
       <S.spotList>
         {tourPlaces.map((item) => {
           return (
@@ -73,7 +76,9 @@ function List() {
             </S.spotCard>
           );
         })}
-        <div ref={ref}>{loading && <Spinner />}</div>
+        <div className="ob-div" ref={ref}>
+          {loading && <Spinner />}
+        </div>
       </S.spotList>
     </S.detailPlaceList>
   );

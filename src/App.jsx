@@ -1,7 +1,7 @@
 import { Reset } from 'styled-reset';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Router from './shared/Router';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './firebase';
 const queryClient = new QueryClient({
@@ -13,7 +13,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const [user, setUser] = useState('');
+  const [, setUser] = useState('');
 
   onAuthStateChanged(auth, (user) => {
     if (user) {

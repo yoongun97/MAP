@@ -16,6 +16,7 @@ const StHeader = styled.header`
   padding: 24px;
   background-color: #2f2b6d;
   color: white;
+  transition: opacity 0.3 ease;
 `;
 
 const StLogo = styled.div`
