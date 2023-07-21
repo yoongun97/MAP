@@ -101,12 +101,12 @@ export const planningBox = styled.div`
     }}; /* 초기에 댓글창 숨김 */
     position: fixed;
     bottom: 0;
-    width: 75%;
+    width: 72%;
     height: 70vh;
     left: 0;
     /* border: 1px solid black; */
     background-color: white;
-    padding: 20px;
+    padding: 0 20px;
     box-sizing: border-box;
     box-shadow: 0 3px 10px rgba(0, 100, 255, 0.2);
     z-index: 9;
@@ -136,5 +136,22 @@ export const planningBox = styled.div`
       transform: translateY(100%);
       opacity: 0;
     }
+  }
+  .icon-box {
+    width: 100%;
+    height: 30px;
+    margin-top: 0;
+    border-bottom: 1.5px solid rgba(0, 100, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .drop-down-icon {
+    margin-left: 5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 7px solid black;
+    pointer-events: none;
   }
 `;

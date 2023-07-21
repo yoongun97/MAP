@@ -56,7 +56,11 @@ const Detail = () => {
       {place && <List place={place} />}
       <S.toggleBtn onClick={handlePlanBox}>여행계획작성하기</S.toggleBtn>
       <S.planningBox $view={isShow}>
-        <div ref={planBoxRef} className="planning-box"></div>
+        <div ref={planBoxRef} className="planning-box">
+          <div className="icon-box" onClick={handlePlanBox}>
+            <span className="drop-down-icon"></span>
+          </div>
+        </div>
       </S.planningBox>
     </S.detailContainer>
   );
