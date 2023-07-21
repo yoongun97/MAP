@@ -13,7 +13,7 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  const [user, setUser] = useState('');
+  const [, setUser] = useState('');
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
