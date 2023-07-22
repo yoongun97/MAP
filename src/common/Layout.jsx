@@ -30,14 +30,15 @@ const StFooter = styled.div`
   padding: 24px;
   background-color: #eeeeee;
   color: black;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
+  z-index: 1;
 `;
 
 const StContent = styled.div`
-  ${({ $view }) => $view && 'opacity: 0.3'}; // 모달이 열렸을 때 투명도 변경
+  ${({ $view }) => $view && 'filter: blur(5px);'}; // 모달이 열렸을 때 투명도와 backdrop 효과 적용
   margin-top: 73px;
 `;
 

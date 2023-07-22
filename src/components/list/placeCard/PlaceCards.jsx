@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { L } from './StyledPlaceCards';
 import { useMutation, useQueryClient } from 'react-query';
 import { handleLike } from '../../../api/likes';
@@ -15,6 +15,7 @@ const PlaceCards = () => {
       queryClient.invalidateQueries('placeData');
     }
   });
+
   const currentUser = auth.currentUser?.uid;
 
   const filteredData = data.filter((place) => place.placeName.toLowerCase().includes(searchKeyword.toLowerCase()));

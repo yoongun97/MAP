@@ -21,6 +21,7 @@ const ListSearchingBox = () => {
       setIsShow(false);
     }
   });
+  const inputRef = useRef();
 
   const handleSearchInput = (e) => {
     setSearchValue(e.target.value);
