@@ -1,17 +1,21 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LSB } from './StyledListSearchingBox';
 import { useDispatch } from 'react-redux';
 import { sortPlaces } from '../../../redux/modules/places';
+import { setSearchKeyword } from '../../../redux/modules/searchKeyword';
 
 const ListSearchingBox = () => {
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
   const [isShow, setIsShow] = useState(false);
   const sortingValues = ['좋아요순', '오름차순', '내림차순'];
   const [sortingValue, setSortingValue] = useState(sortingValues[0]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     dispatch(sortPlaces(sortingValue));
   }, [sortingValue]);
+
   window.addEventListener('click', (e) => {
     if (!(e.target.getAttribute('class') === 'sort-btn')) {
       setIsShow(false);
@@ -19,6 +23,13 @@ const ListSearchingBox = () => {
   });
   const inputRef = useRef();
 
+  const handleSearchInput = (e) => {
+    setSearchValue(e.target.value);
+  };
+  // 검색어가 변경될 때마다 필터링된 데이터 업데이트
+  useEffect(() => {
+    dispatch(setSearchKeyword(searchValue));
+  }, [searchValue]);
   return (
     <LSB.SearchContainer $view={isShow.toString()}>
       <div
@@ -33,7 +44,13 @@ const ListSearchingBox = () => {
             <path fill="none" stroke="#000" strokeWidth={'1.1'} d="M14,14 L18,18 L14,14 Z"></path>
           </svg>
         </span>
-        <input type="text" ref={inputRef} placeholder="여행지(지역)를 검색하세요." />
+        <input
+          type="text"
+          ref={inputRef}
+          value={searchValue}
+          onChange={handleSearchInput}
+          placeholder="여행지(지역)를 검색하세요."
+        />
       </div>
       <div className="filter-sort-btn-container">
         <button

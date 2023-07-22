@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './StyledDetail';
 import KakaoMap from './KakaoMap';
-import { onLoadKakaoMap, allMarkers } from '../../api/kakao';
+import { onLoadKakaoMap } from '../../api/kakao';
 import List from './List';
 import { getDetailPlaceData } from '../../api/places';
 import { useParams } from 'react-router-dom';
