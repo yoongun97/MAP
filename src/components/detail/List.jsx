@@ -10,9 +10,10 @@ import { fecthTourPlaces, fecthTourPlacesBasedAreaCode, setPlace } from '../../r
 import { savePlans } from '../../api/plans';
 import { auth } from '../../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-function List({ place }) {
+function List({ place, isShowPlanAdd }) {
   const ref = useRef(null);
   const dispatch = useDispatch();
+  const [selectedPlaces, setSelectedPlaces] = useState([]);
   const currentUser = auth.currentUser?.uid ?? '';
   const { tourPlaces, loading, nothing } = useSelector((state) => state.tourPlacesReducer);
   const { kakao, kakaoLoading, isMarked, isMarkedMarked } = useSelector((state) => state.kakaoReducer);
@@ -89,6 +90,11 @@ function List({ place }) {
     }
   }, [page, isMarked, kakao]);
 
+  // + 버튼 클릭 이벤트
+  const handleAddToPlan = (selectedPlace) => {
+    setSelectedPlaces([...selectedPlaces, selectedPlace]);
+  };
+
   return (
     <S.detailPlaceList>
       <div className="rec-div">
@@ -114,6 +120,11 @@ function List({ place }) {
                     <S.StTitle>{item.title}</S.StTitle>
                     <S.StDesc>{item.addr1}</S.StDesc>
                   </div>
+                  {isShowPlanAdd && (
+                    <button className="placeAddBtn" onClick={() => handleAddToPlan(item)}>
+                      +
+                    </button>
+                  )}
                 </S.spotCard>
               );
             })

@@ -22,7 +22,7 @@ export const detailKakaoMap = styled.div`
 export const detailPlaceList = styled.div`
   border-radius: 10px;
   background: rgba(31, 38, 135, 0.02);
-  width: 20%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,6 +73,18 @@ export const spotCard = styled.li`
   height: 4.5vw;
   min-height: 50px;
   gap: 10px;
+  .placeAddBtn {
+    background-color: transparent;
+    height: 30px;
+    width: 30px;
+    border: rgba(0, 100, 255, 0.2) solid 1px;
+    border-radius: 7px;
+    margin: auto 5px auto auto;
+    float: right;
+    &:hover {
+      background-color: rgba(0, 100, 255, 0.2);
+    }
+  }
 `;
 
 export const spotImage = styled.div`
@@ -83,16 +95,23 @@ export const spotImage = styled.div`
     aspect-ratio: 1;
   }
 `;
+export const rightBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  height: 700px;
+`;
 export const toggleBtn = styled.button`
-  position: fixed;
-  right: 0;
-  height: 30px;
-  z-index: 1;
+  height: 60px;
   margin: 5px;
+  margin-top: 20px;
   background-color: white;
   border: 1px solid rgba(0, 100, 255, 0.2);
   border-radius: 7px;
   box-shadow: 0 3px 10px rgba(0, 100, 255, 0.2);
+  &:hover {
+    background-color: rgba(0, 100, 255, 0.2);
+  }
 `;
 export const planningBox = styled.div`
   .planning-box {
