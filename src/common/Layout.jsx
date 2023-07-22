@@ -30,10 +30,11 @@ const StFooter = styled.div`
   padding: 24px;
   background-color: #eeeeee;
   color: black;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
+  z-index: 1;
 `;
 
 const StContent = styled.div`
