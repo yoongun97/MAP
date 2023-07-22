@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { LSB } from './StyledListSearchingBox';
 import { useDispatch } from 'react-redux';
 import { sortPlaces } from '../../../redux/modules/places';
@@ -17,9 +17,9 @@ const ListSearchingBox = () => {
       setIsShow(false);
     }
   });
+  const inputRef = useRef();
 
   return (
-
     <LSB.SearchContainer $view={isShow.toString()}>
       <div
         className="search-box"

@@ -21,11 +21,8 @@ function LikedCard() {
   const likedPlaces = places.filter((place) => place.likedUsers.includes(currentUser));
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user?.uid);
-    });
+    onAuthStateChanged(auth, (user) => {});
   }, []);
-  console.log('curUser', currentUser?.uid);
 
   return (
     <div>

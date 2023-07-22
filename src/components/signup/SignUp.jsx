@@ -186,7 +186,7 @@ function SignUp({ openModal, closeModal, isSignUpOpen, SignUpModalRef }) {
             navigate(`/mypage/${auth.currentUser.uid}`);
           }}
         >
-          {currentUser}
+          {currentUser} 님
         </StHeaderBtn>
       ) : (
         // 로그인되지 않은 경우 회원가입 버튼 표시
