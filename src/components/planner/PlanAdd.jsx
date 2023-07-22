@@ -45,6 +45,7 @@ function PlanAdd(plans) {
   const handleAddBtnClick = () => {
     plans.handlePlanBox();
     setPlanText('');
+    setSelectedTimeBtn(1);
   };
 
   return (

@@ -11,6 +11,7 @@ const Detail = () => {
   const planBoxRef = useRef(null);
   const { placeId } = useParams();
   const [place, setPlace] = useState();
+  const [isShow, setIsShow] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +35,8 @@ const Detail = () => {
       onLoadKakaoMap(place.mapY, place.mapX);
     }
   });
-  const [isShow, setIsShow] = useState(false);
+
+  // 여행계획 작성하기 버튼 이벤트
   const handlePlanBox = () => {
     if (planBoxRef.current.getAttribute('class').includes('slide-in')) {
       planBoxRef.current.setAttribute('class', 'planning-box slide-out');
@@ -49,13 +51,14 @@ const Detail = () => {
     }
   };
   console.log(planBoxRef.current);
+
   return (
     <S.detailContainer>
       {/* <S.detailBox>상세 페이지</S.detailBox> */}
       <KakaoMap />
       {/* <button onClick={() => allMarkers()}>초기화</button> */}
       <S.rightBox>
-        {place && <List place={place} />}
+        {place && <List place={place} isShowPlanAdd={isShow} />}
         <S.toggleBtn onClick={handlePlanBox}>여행계획작성하기</S.toggleBtn>
       </S.rightBox>
       <S.planningBox $view={isShow}>

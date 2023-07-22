@@ -73,6 +73,18 @@ export const spotCard = styled.li`
   height: 4.5vw;
   min-height: 50px;
   gap: 10px;
+  .placeAddBtn {
+    background-color: transparent;
+    height: 30px;
+    width: 30px;
+    border: rgba(0, 100, 255, 0.2) solid 1px;
+    border-radius: 7px;
+    margin: auto 5px auto auto;
+    float: right;
+    &:hover {
+      background-color: rgba(0, 100, 255, 0.2);
+    }
+  }
 `;
 
 export const spotImage = styled.div`
