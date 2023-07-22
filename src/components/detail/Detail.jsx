@@ -40,17 +40,14 @@ const Detail = () => {
   const handlePlanBox = () => {
     if (planBoxRef.current.getAttribute('class').includes('slide-in')) {
       planBoxRef.current.setAttribute('class', 'planning-box slide-out');
-      console.log(planBoxRef.current);
       setTimeout(() => {
         setIsShow(!isShow);
       }, 500);
     } else {
       planBoxRef.current.setAttribute('class', 'planning-box slide-in');
-      console.log(planBoxRef.current);
       setIsShow(!isShow);
     }
   };
-  console.log(planBoxRef.current);
 
   return (
     <S.detailContainer>
