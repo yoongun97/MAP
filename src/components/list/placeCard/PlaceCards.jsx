@@ -5,7 +5,7 @@ import { handleLike } from '../../../api/likes';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { auth } from '../../../firebase';
-
+import { useState, useEffect } from 'react';
 const PlaceCards = () => {
   const data = useSelector((state) => state.places);
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ const PlaceCards = () => {
       queryClient.invalidateQueries('placeData');
     }
   });
-
 
   const currentUser = auth.currentUser?.uid;
 

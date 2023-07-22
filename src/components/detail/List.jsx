@@ -7,11 +7,13 @@ import useInfiniteScoll from '../../hooks/useInfiniteScroll';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsMarkedMarked } from '../../redux/modules/kakao';
 import { fecthTourPlaces, fecthTourPlacesBasedAreaCode, setPlace } from '../../redux/modules/tourPlaces';
-
+import { savePlans } from '../../api/plans';
+import { auth } from '../../firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 function List({ place }) {
   const ref = useRef(null);
   const dispatch = useDispatch();
-
+  const currentUser = auth.currentUser?.uid ?? '';
   const { tourPlaces, loading, nothing } = useSelector((state) => state.tourPlacesReducer);
   const { kakao, kakaoLoading, isMarked, isMarkedMarked } = useSelector((state) => state.kakaoReducer);
 
@@ -34,6 +36,14 @@ function List({ place }) {
       return prev + 1;
     });
   });
+  const save = async () => {
+    let data = {
+      userId: currentUser,
+      placeId: place.placeId,
+      day1: { spot1: { place: 'tourplace', text: 'text' } }
+    };
+    await savePlans(data);
+  };
 
   const [observe, unobserve] = useInfiniteScoll(increasePage);
 
@@ -84,6 +94,7 @@ function List({ place }) {
       <div className="rec-div">
         <p>추천장소</p>
       </div>
+      <button onClick={save}>Savetest</button>
       <S.spotList>
         {tourPlaces.length > 1
           ? tourPlaces.map((item) => {

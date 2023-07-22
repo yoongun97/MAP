@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { LSB } from './StyledListSearchingBox';
 import { useDispatch } from 'react-redux';
 import { sortPlaces } from '../../../redux/modules/places';
-
+import { useRef } from 'react';
 const ListSearchingBox = () => {
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
   const [isShow, setIsShow] = useState(false);
   const sortingValues = ['좋아요순', '오름차순', '내림차순'];
@@ -19,7 +20,6 @@ const ListSearchingBox = () => {
   });
 
   return (
-
     <LSB.SearchContainer $view={isShow.toString()}>
       <div
         className="search-box"
