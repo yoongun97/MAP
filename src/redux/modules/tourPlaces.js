@@ -39,7 +39,16 @@ const tourPlaceSlice = createSlice({
   initialState,
   reducers: {
     setPlace(state, action) {
-      state.tourPlaces = action.payload; //[]
+      state.tourPlaces = action.payload; //type:[]
+    },
+    setDisplayPlace(state, action) {
+      state.tourPlaces = state.tourPlaces.map((place) => {
+        if (place.contentid === action.payload) {
+          place.visible = !place.visible;
+          return place;
+        }
+        return place;
+      });
     }
   },
   extraReducers: (builder) => {
@@ -52,7 +61,9 @@ const tourPlaceSlice = createSlice({
       .addCase(fecthTourPlaces.fulfilled, (state, action) => {
         state.loading = false;
         let dupArr = [...state.tourPlaces, ...action.payload.res];
-        let dupRemovedArr = [...new Map(dupArr.map((tourPlace) => [tourPlace.contentid, tourPlace])).values()];
+        let dupRemovedArr = [
+          ...new Map(dupArr.map((tourPlace) => [tourPlace.contentid, { ...tourPlace, visible: true }])).values()
+        ];
         action.payload.unob();
         state.tourPlaces = dupRemovedArr;
         action.payload.ob();
@@ -70,7 +81,9 @@ const tourPlaceSlice = createSlice({
       .addCase(fecthTourPlacesBasedAreaCode.fulfilled, (state, action) => {
         state.loading = false;
         let dupArr = [...state.tourPlaces, ...action.payload.res];
-        let dupRemovedArr = [...new Map(dupArr.map((tourPlace) => [tourPlace.contentid, tourPlace])).values()];
+        let dupRemovedArr = [
+          ...new Map(dupArr.map((tourPlace) => [tourPlace.contentid, { ...tourPlace, visible: true }])).values()
+        ];
 
         action.payload.unob();
         state.tourPlaces = dupRemovedArr;
@@ -83,4 +96,4 @@ const tourPlaceSlice = createSlice({
   }
 });
 export default tourPlaceSlice.reducer;
-export const { setPlace } = tourPlaceSlice.actions;
+export const { setPlace, setDisplayPlace } = tourPlaceSlice.actions;
