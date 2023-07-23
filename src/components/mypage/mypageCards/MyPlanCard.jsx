@@ -11,7 +11,6 @@ const MyPlanCard = () => {
   const currentUser = auth.currentUser?.uid;
   const queryClient = useQueryClient();
   const { isLoading, data } = useQuery('detailData', () => fetchPlans(currentUser));
-  console.log(data);
   const deletePlanMutation = useMutation(deletePlan, {
     onSuccess: () => {
       queryClient.invalidateQueries('detailData');

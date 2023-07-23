@@ -13,6 +13,7 @@ export const detailContainer = styled.div`
 export const detailKakaoMap = styled.div`
   width: 70%;
   height: ${({ $view }) => ($view ? '22vh' : '70vh')};
+  /* transition: height 0.5s; */
 `;
 
 export const detailPlaceList = styled.div`
@@ -128,7 +129,6 @@ export const planningBox = styled.div`
     width: 72%;
     height: 70vh;
     left: 0;
-    /* border: 1px solid black; */
     background-color: white;
     padding: 0 20px;
     box-sizing: border-box;
@@ -147,13 +147,13 @@ export const planningBox = styled.div`
       opacity: 0;
     }
     to {
-      transform: translateY(0);
+      transform: translateY(0%);
       opacity: 1;
     }
   }
   @keyframes slideOut {
     from {
-      transform: translateY(0);
+      transform: translateY(0%);
       opacity: 1;
     }
     to {
