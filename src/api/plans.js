@@ -1,4 +1,4 @@
-import { collection, getDocs, where, query, getDoc, doc, addDoc } from 'firebase/firestore';
+import { collection, getDocs, where, query, addDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 /**
  *
@@ -6,15 +6,15 @@ import { db } from '../firebase';
  */
 export const savePlan = async (data) => {
   try {
-    await addDoc(collection(db, 'Plans'), data);
-    return { success: true, message: '작성했습니다.' };
+    await addDoc(collection(db, 'plans'), data);
+    return { success: true, message: '여행 계획 작성!!' };
   } catch (e) {
-    return { success: false, message: 'db오류가 발생' };
+    return { success: false, message: 'savePlan > ', e };
   }
 };
 export const fetchPlans = async (userId) => {
   try {
-    const q = query(collection(db, 'Plans'), where('userId', '==', userId));
+    const q = query(collection(db, 'plans'), where('userId', '==', userId));
     const qSnap = await getDocs(q);
     let result = [];
     if (!qSnap.empty) {
@@ -24,6 +24,6 @@ export const fetchPlans = async (userId) => {
       return result;
     }
   } catch (e) {
-    console.log(e);
+    console.log('fetchPlans > ', e);
   }
 };

@@ -1,26 +1,37 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { savePlan } from '../../api/plans';
+
 const name = 'plan';
+
+// 현재 일자 구하기
+const getCurrentDate = () => {
+  const currentDate = new Date();
+  return currentDate.toLocaleDateString('ko-kr');
+};
+
 export const writePlan = createAsyncThunk(`${name}/writePlan`, async (data, thunkAPI) => {
   try {
+    const newData = { ...data, createdAt: getCurrentDate() };
     if (
-      Object.entries(data.day1).length === 0 &&
-      Object.entries(data.day2).length === 0 &&
-      Object.entries(data.day3).length === 0 &&
-      Object.entries(data.day5).length === 0 &&
-      Object.entries(data.day4).length === 0
+      Object.entries(newData.day1).length === 0 &&
+      Object.entries(newData.day2).length === 0 &&
+      Object.entries(newData.day3).length === 0 &&
+      Object.entries(newData.day5).length === 0 &&
+      Object.entries(newData.day4).length === 0
     ) {
       return thunkAPI.rejectWithValue({ error: { message: '작성해주세요' } });
     }
-    const result = await savePlan(data);
+    console.log(newData);
+    const result = await savePlan(newData);
     if (result.success) return thunkAPI.fulfillWithValue({ message: result.message });
     return thunkAPI.rejectWithValue({ error: { message: result.message } });
   } catch (e) {
-    return thunkAPI.rejectWithValue({ error: { message: '에러발생' } });
+    return thunkAPI.rejectWithValue({ error: { message: e } });
   }
 });
+
 const initialState = {
-  plan: { userId: null, placeId: null, day1: [], day2: [], day3: [], day4: [], day5: [] },
+  plan: { userId: null, placeId: null, title: null, createdAt: null, day1: [], day2: [], day3: [], day4: [], day5: [] },
   selectedTime: 1,
   loading: false,
   message: null,
@@ -90,6 +101,9 @@ const planSlice = createSlice({
       state.plan.placeId = action.payload.placeId;
       state.plan.userId = action.payload.userId;
     },
+    setPlanTitle(state, action) {
+      state.plan.title = action.payload;
+    },
     setTextSpot(state, action) {
       state.plan[`day${action.payload.day}`][action.payload.index].text = action.payload.text;
     },
@@ -122,5 +136,12 @@ const planSlice = createSlice({
   }
 });
 export default planSlice.reducer;
-export const { addTourPlace, initTourPlaceData, setSelectedTime, setTextSpot, deleteTourPlace, deleteAllTourPlace } =
-  planSlice.actions;
+export const {
+  addTourPlace,
+  initTourPlaceData,
+  setSelectedTime,
+  setTextSpot,
+  deleteTourPlace,
+  deleteAllTourPlace,
+  setPlanTitle
+} = planSlice.actions;

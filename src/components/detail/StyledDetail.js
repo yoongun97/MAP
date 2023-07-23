@@ -9,10 +9,6 @@ export const detailContainer = styled.div`
   position: relative;
   /* margin-top: 100px; */
 `;
-export const detailBox = styled.div`
-  border: 1px solid black;
-  width: 20%;
-`;
 
 export const detailKakaoMap = styled.div`
   width: 70%;
@@ -50,18 +46,21 @@ export const spotList = styled.ul`
     height: 5px;
   }
 `;
+
 export const StTitle = styled.p`
   font-size: 1.4vh;
   font-weight: bold;
   margin-top: 10px;
   margin-bottom: 5px;
 `;
+
 export const StDesc = styled.p`
   font-size: 1.2vh;
   opacity: 0.8;
   color: gray;
   font-weight: bold;
 `;
+
 export const spotCard = styled.li`
   box-shadow: 0 2px 10px rgba(0, 100, 255, 0.2);
   background: white;
@@ -73,6 +72,7 @@ export const spotCard = styled.li`
   height: 4.5vw;
   min-height: 50px;
   gap: 10px;
+  /* width: 50vh; */
   .placeAddBtn {
     background-color: transparent;
     height: 30px;
@@ -83,6 +83,7 @@ export const spotCard = styled.li`
     float: right;
     &:hover {
       background-color: rgba(0, 100, 255, 0.2);
+      cursor: pointer;
     }
   }
 `;
@@ -95,12 +96,14 @@ export const spotImage = styled.div`
     aspect-ratio: 1;
   }
 `;
+
 export const rightBox = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
   height: 700px;
 `;
+
 export const toggleBtn = styled.button`
   height: 60px;
   margin: 5px;
@@ -111,8 +114,10 @@ export const toggleBtn = styled.button`
   box-shadow: 0 3px 10px rgba(0, 100, 255, 0.2);
   &:hover {
     background-color: rgba(0, 100, 255, 0.2);
+    cursor: pointer;
   }
 `;
+
 export const planningBox = styled.div`
   .planning-box {
     display: ${(props) => {

@@ -5,9 +5,11 @@ import { useQuery } from 'react-query';
 import { fetchPlans } from '../../../api/plans';
 import { ReactComponent as Spinner } from '../../../assets/Spinner.svg';
 import { auth } from '../../../firebase';
+import planImg from '../../../assets/plan.png';
 
 const MyPlanCard = () => {
   const currentUser = auth.currentUser?.uid;
+
   const { isLoading, data } = useQuery('detailData', () => fetchPlans(currentUser));
   const [isOpenPlanViewModal, setIsOpenPlanViewModal] = useState(false);
   const [detailData, setDetailData] = useState([]);
@@ -29,15 +31,31 @@ const MyPlanCard = () => {
         <>
           <MPC.Wrap $view={isOpenPlanViewModal}>
             {data?.map((plan, idx) => {
+              // img 찾기
+              let imageUrl = '';
+
+              for (let i = 1; i <= 5; i++) {
+                let day = `day${i}`;
+                let arr = plan[day];
+
+                if (arr.length > 0) {
+                  let img = arr.find((item) => item.firstimage);
+                  if (img) {
+                    imageUrl = img.firstimage;
+                    break;
+                  }
+                }
+              }
+
               return (
                 <div key={idx} className="plancard-container" onClick={() => {}}>
                   <div className="img-div">
-                    <img src={plan.day1[0].firstimage} alt="이미지"></img>
+                    <img src={imageUrl ? imageUrl : planImg} alt="이미지"></img>
                   </div>
                   <div className="info-box">
                     <span>
                       {plan.title}
-                      <p>{`작성일: 월 일`}</p>
+                      <p>{`${plan.createdAt}`}</p>
                     </span>
                     <button
                       onClick={(e) => {

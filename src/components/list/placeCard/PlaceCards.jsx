@@ -5,6 +5,7 @@ import { handleLike } from '../../../api/likes';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { auth } from '../../../firebase';
+
 const PlaceCards = () => {
   const { searchKeyword, places: data } = useSelector((state) => state);
   const navigate = useNavigate();
