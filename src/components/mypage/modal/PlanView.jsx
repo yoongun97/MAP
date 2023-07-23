@@ -3,11 +3,14 @@ import { PV } from './StyledPlanView';
 
 const PlanView = ({ closeModal, plan }) => {
   const [selectedTimeBtn, setSelectedTimeBtn] = useState(1);
+
+  // 일자 지정을 위한 배열
   const timeButtons = [1, 2, 3, 4, 5];
+
+  // 일자 클릭
   const handleTimeBtnClick = (time) => {
     setSelectedTimeBtn(time);
   };
-  console.log(plan);
   return (
     <PV.Wrap
       onClick={(e) => {

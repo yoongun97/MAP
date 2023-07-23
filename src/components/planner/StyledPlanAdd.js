@@ -6,6 +6,7 @@ export const planContainer = styled.div`
   margin-top: 10px;
   border: none;
 `;
+
 export const timeBtnBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -25,10 +26,12 @@ export const timeBtnBox = styled.div`
     border: rgba(0, 100, 255, 0.2) solid 2px;
   }
 `;
+
 export const planContentBox = styled.div`
   border: rgba(0, 100, 255, 0.2) solid 1px;
   width: 55vw;
   margin-right: 10px;
+
   .planCard {
     display: flex;
     .cardDeleteBtn {
@@ -40,8 +43,10 @@ export const planContentBox = styled.div`
       margin: auto;
       float: right;
       overflow: hidden;
+
       &:hover {
         opacity: 0.5;
+        cursor: pointer;
       }
       .deleteImage {
         height: 30px;
@@ -50,10 +55,12 @@ export const planContentBox = styled.div`
     }
   }
 `;
+
 export const planPlaceCard = styled.div`
   margin: 20px;
   width: 80%;
   border: rgba(0, 100, 255, 0.2) solid 1px;
+
   .contentBox {
     display: flex;
     border: rgba(0, 100, 255, 0.2) solid 1px;
@@ -63,6 +70,7 @@ export const planPlaceCard = styled.div`
       max-width: 200px;
     }
   }
+
   .discBox {
     padding: 10px;
   }
@@ -74,6 +82,7 @@ export const planPlaceCard = styled.div`
     border: rgba(0, 100, 255, 0.2) solid 1px;
   }
 `;
+
 export const planAddBtn = styled.button`
   width: 100px;
   background-color: white;

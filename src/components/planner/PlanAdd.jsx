@@ -3,18 +3,24 @@ import * as P from './StyledPlanAdd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedTime, setTextSpot, deleteTourPlace, writePlan, deleteAllTourPlace } from '../../redux/modules/plan';
 import noImage from '../../assets/noimage.png';
-import { fetchPlans } from '../../api/plans';
 import { setDisplayPlace } from '../../redux/modules/tourPlaces';
+
 function PlanAdd(plans) {
-  const [selectedTimeBtn, setSelectedTimeBtn] = useState(1); // 선택된 timeBtn 상태 추가
-  const timeButtons = [1, 2, 3, 4, 5];
   const dispatch = useDispatch();
-  const { plan, error, message } = useSelector((state) => state.planReducer);
+
+  const [selectedTimeBtn, setSelectedTimeBtn] = useState(1); // 선택된 timeBtn 상태 추가
+
+  // error 또는 상태 message가 필요하다면 받아오면 된다.
+  const { plan } = useSelector((state) => state.planReducer);
+
   const [planText, setPlanText] = useState('');
+
+  const timeButtons = [1, 2, 3, 4, 5];
 
   useEffect(() => {
     dispatch(deleteAllTourPlace()); //한번 다 지워줘야됌
   }, []);
+
   const handleTimeBtnClick = (time) => {
     setSelectedTimeBtn(time); // 선택된 timeBtn 상태 업데이트
     dispatch(setSelectedTime(time));
@@ -28,12 +34,15 @@ function PlanAdd(plans) {
     plans.handlePlanBox();
     setPlanText('');
     setSelectedTimeBtn(1);
+    console.log('plan', plan);
     dispatch(writePlan(plan));
   };
+
   const handleDeletePlan = (e, day, index, contentid) => {
     dispatch(setDisplayPlace(contentid));
     dispatch(deleteTourPlace({ day, index }));
   };
+
   return (
     <P.planContainer>
       <P.timeBtnBox>

@@ -8,21 +8,25 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const { url, method, params, data } = config;
+    // 개발 시 확인용
+    // const { url, method, params, data } = config;
     return config;
   },
   (error) => {
-    console.log(`"[요청에러]"+${error}`);
+    // 개발 시 확인용
+    // console.log(`"[요청에러]"+${error}`);
     return Promise.reject(error);
   }
 );
 instance.interceptors.response.use(
   (response) => {
-    console.log(`[응답데이터]: ${JSON.stringify(response.data, null, 2)}`);
+    // 개발 시 확인용
+    // console.log(`[응답데이터]: ${JSON.stringify(response.data, null, 2)}`);
     return response;
   },
   (error) => {
-    console.log(`"[응답에러]"+${error}`);
+    // 개발 시 확인용
+    // console.log(`"[응답에러]"+${error}`);
     return Promise.reject(error);
   }
 );

@@ -50,15 +50,11 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   // 로그인 버튼 클릭 시 이벤트
   const signIn = async (event) => {
     event.preventDefault();
-    console.log('click signIn'); // 로그 확인을 위해 추가
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log(userCredential);
-      alert('로그인 되었습니다.');
 
       closeLogInModal();
     } catch (error) {
-      console.error(error);
       if (error.code === 'auth/user-not-found') {
         setErrorMessage('이메일이 존재하지 않습니다.');
       } else if (error.code === 'auth/wrong-password') {
@@ -93,7 +89,6 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log(result);
         const user = result.user;
         const { email, uid, displayName } = user;
         const userDocRef = doc(db, 'users', uid); // 해당 유저의 문서 참조
