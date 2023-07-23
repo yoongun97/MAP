@@ -12,6 +12,16 @@ export const savePlan = async (data) => {
     return { success: false, message: 'db오류가 발생' };
   }
 };
+export const deletePlan = async (planId) => {
+  try {
+    console.log(planId);
+
+    const res = await db.collection('Plans').doc(planId).delete();
+    console.log(res);
+  } catch (e) {
+    return { success: false, message: 'db오류가 발생' };
+  }
+};
 export const fetchPlans = async (userId) => {
   try {
     const q = query(collection(db, 'Plans'), where('userId', '==', userId));
@@ -19,7 +29,7 @@ export const fetchPlans = async (userId) => {
     let result = [];
     if (!qSnap.empty) {
       result = qSnap.docs.map((place) => {
-        return place.data();
+        return { planId: place.id, ...place.data() };
       });
       return result;
     }
