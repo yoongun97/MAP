@@ -7,8 +7,9 @@ import { db } from '../firebase';
 export const savePlan = async (data) => {
   try {
     await addDoc(collection(db, 'Plans'), data);
+    return { success: true, message: '작성했습니다.' };
   } catch (e) {
-    console.log(e);
+    return { success: false, message: 'db오류가 발생' };
   }
 };
 export const fetchPlans = async (userId) => {

@@ -16,7 +16,7 @@ const Detail = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getDetailPlaceData(placeId);
-      setPlace(data);
+      setPlace({ ...data, placeId });
     };
     fetchData();
   }, []);
