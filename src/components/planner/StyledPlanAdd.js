@@ -18,8 +18,9 @@ export const planAddBtn = styled.button`
   width: 100px;
   height: 40px;
   background-color: white;
-  border: 1px solid rgba(0, 100, 255, 0.2);
+  border: 1px solid rgba(255, 100, 0, 0.2);
   border-radius: 7px;
+  box-shadow: 0 4px 15px -3px rgba(255, 100, 0, 0.2);
   cursor: pointer;
   &:hover {
     background-color: rgba(0, 100, 255, 0.2);

@@ -56,7 +56,6 @@ const Detail = () => {
       setIsShow(!isShow);
     }
   };
-
   // 디바운싱
   const debouncedHandlePlanBox = useDebounce(handlePlanBox, 300);
 
