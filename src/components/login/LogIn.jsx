@@ -109,13 +109,13 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
               );
             }
           })
-          .catch((error) => {
-            console.log(error);
+          .catch((e) => {
+            console.log('googleLogin > getDoc > ', e);
           });
         closeLogInModal();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
+        console.log('googleLogin > signInWithPopup > ', e);
       });
   };
 
@@ -144,13 +144,13 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
               );
             }
           })
-          .catch((error) => {
-            console.log(error);
+          .catch((e) => {
+            console.log('githubLogin > getDoc > ', e);
           });
         closeLogInModal();
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((e) => {
+        console.log('githubLogin > signInWithPopup > ', e);
       });
   };
 

@@ -18,37 +18,42 @@ const PlanView = ({ closeModal, plan }) => {
       }}
     >
       <div className="modal">
-        <div className="time-btn-box">
-          {timeButtons.map((time) => (
-            <button
-              key={time}
-              className={`timeBtn ${selectedTimeBtn === time ? 'active' : ''}`}
-              onClick={() => handleTimeBtnClick(time)}
-            >
-              {`${time}일차`}
+        <p className="title">{plan[0].title}</p>
+        <div className="contentContainer">
+          <div className="time-btn-box">
+            {timeButtons.map((time) => (
+              <button
+                key={time}
+                className={`timeBtn ${selectedTimeBtn === time ? 'active' : ''}`}
+                onClick={() => handleTimeBtnClick(time)}
+              >
+                {`${time}일차`}
+              </button>
+            ))}
+
+            <button className="close-modal" onClick={closeModal}>
+              닫기
             </button>
-          ))}
-          <button className="close-modal" onClick={closeModal}>
-            닫기
-          </button>
-        </div>
-        <div className="plan-content-box">
-          {plan[0][`day${selectedTimeBtn}`]?.map((spot) => {
-            return (
-              <div key={spot.title} className="plan-card">
-                <div className="plan-place-card">
-                  <div className="content-box">
-                    <img className="fit-picture" src={spot.firstimage} alt="장소사진" />
-                    <div className="disc-box">
-                      <h2>{spot.title}</h2>
-                      <p>{spot.addr1 + spot.addr2}</p>
+          </div>
+          <div className="plan-content-box">
+            {plan[0][`day${selectedTimeBtn}`]?.map((spot) => {
+              return (
+                <div key={spot.title} className="plan-card">
+                  <div className="plan-place-card">
+                    <div className="content-box">
+                      <img className="fit-picture" src={spot.firstimage} alt="장소사진" />
+                      <div className="disc-box">
+                        <h2>{spot.title}</h2>
+                        <p>{spot.addr1 + spot.addr2}</p>
+                      </div>
                     </div>
+                    <div className="plan-content">{spot.text}</div>
                   </div>
-                  <div className="plan-content">{spot.text}</div>
+                  <div className="plan-content"></div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </div>
     </PV.Wrap>

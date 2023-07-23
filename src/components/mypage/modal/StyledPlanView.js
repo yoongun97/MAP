@@ -4,6 +4,7 @@ export const PV = {
   Wrap: styled.div`
     .modal {
       display: flex;
+      flex-direction: column;
       width: 88%;
       height: 78%;
       background-color: white;
@@ -14,6 +15,24 @@ export const PV = {
       z-index: 9;
       box-shadow: 0 4px 20px rgba(255, 100, 0, 0.2);
       padding: 20px;
+
+      .title {
+        font-size: 27px;
+        margin-left: 40px;
+        margin-top: 15px;
+        color: rgba(0, 100, 255, 0.5);
+      }
+      .contentContainer {
+        display: flex;
+        width: 90%;
+        height: 80%;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        margin: 0;
+      }
 
       .time-btn-box {
         display: flex;

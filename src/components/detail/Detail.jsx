@@ -7,9 +7,11 @@ import { getDetailPlaceData } from '../../api/places';
 import { useParams } from 'react-router-dom';
 import PlanAdd from '../planner/PlanAdd';
 import { auth } from '../../firebase';
+import useDebounce from '../../hooks/useDebounce';
 
 const Detail = () => {
   const planBoxRef = useRef(null);
+
   const { placeId } = useParams();
   const [place, setPlace] = useState();
   const [isShow, setIsShow] = useState(false);
@@ -55,12 +57,15 @@ const Detail = () => {
     }
   };
 
+  // 디바운싱
+  const debouncedHandlePlanBox = useDebounce(handlePlanBox, 300);
+
   return (
     <S.detailContainer>
       <KakaoMap />
       <S.rightBox>
         {place && <List place={place} isShowPlanAdd={isShow} />}
-        <S.toggleBtn onClick={handlePlanBox}>여행계획작성하기</S.toggleBtn>
+        <S.toggleBtn onClick={debouncedHandlePlanBox}>여행계획작성하기</S.toggleBtn>
       </S.rightBox>
       <S.planningBox $view={isShow}>
         <div ref={planBoxRef} className="planning-box">

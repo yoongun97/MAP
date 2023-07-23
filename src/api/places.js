@@ -25,14 +25,16 @@ const getPlaceData = async () => {
 };
 
 const getDetailPlaceData = async (id) => {
-  const docRef = doc(db, 'places', id);
-  const docSnap = await getDoc(docRef);
-  if (docSnap.exists()) {
-    return {
-      ...docSnap.data()
-    };
-  } else {
-    console.log('No such document!');
+  try {
+    const docRef = doc(db, 'places', id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return {
+        ...docSnap.data()
+      };
+    }
+  } catch (e) {
+    console.log('getDetailPlaceData > ', e);
   }
 };
 

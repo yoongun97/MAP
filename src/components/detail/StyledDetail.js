@@ -114,6 +114,7 @@ export const toggleBtn = styled.button`
   box-shadow: 0 3px 10px rgba(0, 100, 255, 0.2);
   &:hover {
     background-color: rgba(0, 100, 255, 0.2);
+    cursor: pointer;
   }
 `;
 
