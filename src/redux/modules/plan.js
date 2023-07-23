@@ -21,7 +21,6 @@ export const writePlan = createAsyncThunk(`${name}/writePlan`, async (data, thun
     ) {
       return thunkAPI.rejectWithValue({ error: { message: '작성해주세요' } });
     }
-    console.log(newData);
     const result = await savePlan(newData);
     if (result.success) return thunkAPI.fulfillWithValue({ message: result.message });
     return thunkAPI.rejectWithValue({ error: { message: result.message } });

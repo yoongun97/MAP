@@ -11,6 +11,7 @@ export const MPC = {
     align-items: center;
     justify-content: center;
     .plancard-container {
+      position: relative;
       width: 80%;
       aspect-ratio: 7/10;
       border-radius: 2px;
@@ -49,7 +50,7 @@ export const MPC = {
             font-size: 0.8em;
           }
         }
-        button {
+        .view-plan-btn {
           width: 40%;
           background-color: transparent;
           border: 1px solid rgba(255, 100, 0, 0.2);
@@ -57,6 +58,27 @@ export const MPC = {
           margin: 5% 0;
           font-size: 100%;
           cursor: pointer;
+        }
+        .plan-delete-btn {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          width: 10%;
+          aspect-ratio: 1;
+          background-color: white;
+          border: 1px solid rgba(255, 100, 0, 0.2);
+          box-shadow: 0 4px 20px rgba(255, 100, 0, 0.2);
+          border-radius: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: rgba(255, 100, 0, 1);
+          font-weight: bold;
+          font-size: 15px;
+          cursor: pointer;
+          &:hover {
+            transform: scale(1.2);
+          }
         }
       }
     }

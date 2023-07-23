@@ -45,7 +45,6 @@ function PlanAdd(plans) {
     plans.handlePlanBox();
     setPlanText('');
     setSelectedTimeBtn(1);
-    console.log('plan', plan);
     dispatch(writePlan(plan));
   };
 

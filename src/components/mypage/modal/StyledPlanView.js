@@ -19,8 +19,8 @@ export const PV = {
       .title {
         font-size: 27px;
         margin-left: 40px;
-        margin-top: 10px;
-        color: rgba(455, 100, 0, 0.2);
+        margin-top: 15px;
+        color: rgba(0, 100, 255, 0.5);
       }
       .contentContainer {
         display: flex;
