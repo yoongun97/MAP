@@ -62,7 +62,7 @@ const Detail = () => {
 
   return (
     <S.detailContainer>
-      <KakaoMap />
+      <KakaoMap $view={isShow} />
       <S.rightBox>
         {place && <List place={place} isShowPlanAdd={isShow} />}
         <S.toggleBtn onClick={debouncedHandlePlanBox}>여행계획작성하기</S.toggleBtn>

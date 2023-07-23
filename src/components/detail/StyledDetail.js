@@ -12,7 +12,7 @@ export const detailContainer = styled.div`
 
 export const detailKakaoMap = styled.div`
   width: 70%;
-  height: 70vh;
+  height: ${({ $view }) => ($view ? '22vh' : '70vh')};
 `;
 
 export const detailPlaceList = styled.div`
