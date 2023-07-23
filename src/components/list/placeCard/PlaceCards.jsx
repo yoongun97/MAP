@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { auth } from '../../../firebase';
 
 const PlaceCards = () => {
-  const data = useSelector((state) => state.places);
+  const { searchKeyword, places: data } = useSelector((state) => state);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const likeMutation = useMutation(handleLike, {
@@ -18,26 +18,10 @@ const PlaceCards = () => {
 
   const currentUser = auth.currentUser?.uid;
 
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
-
-  // 검색어가 변경될 때마다 필터링된 데이터 업데이트
-  useEffect(() => {
-    const filteredPlaces = data.filter((place) => place.placeName.toLowerCase().includes(searchKeyword.toLowerCase()));
-    setFilteredData(filteredPlaces);
-  }, [data, searchKeyword]);
+  const filteredData = data.filter((place) => place.placeName.toLowerCase().includes(searchKeyword.toLowerCase()));
 
   return (
     <L.Wrap>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-        <input
-          type="text"
-          value={searchKeyword}
-          onChange={(e) => setSearchKeyword(e.target.value)}
-          placeholder="장소를 검색하세요."
-          style={{ height: '40px', fontSize: '16px', padding: '8px', width: '300px' }}
-        />
-      </div>
       {filteredData.map((place, idx) => {
         return (
           <div
