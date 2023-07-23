@@ -16,6 +16,7 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 instance.interceptors.response.use(
   (response) => {
     console.log(`[응답데이터]: ${JSON.stringify(response.data, null, 2)}`);
