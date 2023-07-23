@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { savePlan } from '../../api/plans';
+
 const name = 'plan';
+
 export const writePlan = createAsyncThunk(`${name}/writePlan`, async (data, thunkAPI) => {
   try {
     if (
@@ -19,6 +21,7 @@ export const writePlan = createAsyncThunk(`${name}/writePlan`, async (data, thun
     return thunkAPI.rejectWithValue({ error: { message: '에러발생' } });
   }
 });
+
 const initialState = {
   plan: { userId: null, placeId: null, day1: [], day2: [], day3: [], day4: [], day5: [] },
   selectedTime: 1,

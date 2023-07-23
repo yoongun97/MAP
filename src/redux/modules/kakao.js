@@ -3,7 +3,6 @@ const name = 'kakao';
 
 export const fetchkakao = createAsyncThunk(`${name}/fetchkakao`, async (LatLng, thunkAPI) => {
   try {
-    console.log(LatLng);
     return thunkAPI.fulfillWithValue(LatLng);
   } catch (e) {
     return thunkAPI.rejectWithValue(e);
@@ -25,9 +24,6 @@ const kakaoSlice = createSlice({
   reducers: {
     setIsMarkedMarked(state, action) {
       state.isMarkedMarked = true;
-    },
-    fakeDispatch(state, action) {
-      state.fake = !state.fake;
     }
   },
   extraReducers: (builder) => {
@@ -49,4 +45,4 @@ const kakaoSlice = createSlice({
   }
 });
 export default kakaoSlice.reducer;
-export const { setIsMarkedMarked, fakeDispatch } = kakaoSlice.actions;
+export const { setIsMarkedMarked } = kakaoSlice.actions;
