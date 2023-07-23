@@ -5,8 +5,8 @@ import { sortPlaces } from '../../../redux/modules/places';
 import { setSearchKeyword } from '../../../redux/modules/searchKeyword';
 
 const ListSearchingBox = () => {
-  const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const dispatch = useDispatch();
   const [isShow, setIsShow] = useState(false);
   const sortingValues = ['좋아요순', '오름차순', '내림차순'];
   const [sortingValue, setSortingValue] = useState(sortingValues[0]);
@@ -21,7 +21,6 @@ const ListSearchingBox = () => {
       setIsShow(false);
     }
   });
-  const inputRef = useRef();
 
   const handleSearchInput = (e) => {
     setSearchValue(e.target.value);
