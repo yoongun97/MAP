@@ -42,6 +42,14 @@ function PlanAdd(plans) {
   };
 
   const handleAddBtnClick = async () => {
+    if (!plan.title) {
+      // 여행 제목이 비어있을 경우
+      alert('여행 제목을 입력해주세요.');
+
+      return;
+    }
+    console.log('여행 제목');
+
     plans.handlePlanBox();
     setPlanText('');
     setSelectedTimeBtn(1);

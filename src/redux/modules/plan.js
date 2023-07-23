@@ -19,7 +19,7 @@ export const writePlan = createAsyncThunk(`${name}/writePlan`, async (data, thun
       Object.entries(newData.day5).length === 0 &&
       Object.entries(newData.day4).length === 0
     ) {
-      return thunkAPI.rejectWithValue({ error: { message: '작성해주세요' } });
+      return thunkAPI.rejectWithValue({ error: { message: '1곳 이상의 장소를 추가해주세요' } });
     }
     const result = await savePlan(newData);
     if (result.success) return thunkAPI.fulfillWithValue({ message: result.message });

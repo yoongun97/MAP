@@ -64,7 +64,7 @@ const Detail = () => {
       <KakaoMap $view={isShow} />
       <S.rightBox>
         {place && <List place={place} isShowPlanAdd={isShow} />}
-        <S.toggleBtn onClick={debouncedHandlePlanBox}>여행계획작성하기</S.toggleBtn>
+        <S.toggleBtn onClick={debouncedHandlePlanBox}>여행계획 하러하기</S.toggleBtn>
       </S.rightBox>
       <S.planningBox $view={isShow}>
         <div ref={planBoxRef} className="planning-box">

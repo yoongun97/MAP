@@ -9,18 +9,18 @@ export const planHeader = styled.div`
 `;
 
 export const planTitle = styled.input`
-  height: 30px;
+  height: 50px;
   width: 70%;
   border: rgba(0, 100, 255, 0.2) solid 2px;
+  font-size: 20px;
 `;
 
 export const planAddBtn = styled.button`
-  width: 100px;
-  height: 40px;
+  width: 150px;
+  height: 60px;
   background-color: white;
-  border: 1px solid rgba(255, 100, 0, 0.2);
+  border: 2px solid rgba(0, 100, 255, 0.5);
   border-radius: 7px;
-  box-shadow: 0 4px 15px -3px rgba(255, 100, 0, 0.2);
   cursor: pointer;
   &:hover {
     background-color: rgba(0, 100, 255, 0.2);
@@ -56,8 +56,8 @@ export const timeBtnBox = styled.div`
 
 export const planContentBox = styled.div`
   border: rgba(0, 100, 255, 0.2) solid 1px;
-  width: 55vw;
-  height: 60vh;
+  width: 60vw;
+  height: 58vh;
   margin-right: 10px;
   overflow-y: scroll;
 
