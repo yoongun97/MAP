@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { L } from './StyledPlaceCards';
 import { useMutation, useQueryClient } from 'react-query';
 import { handleLike } from '../../../api/likes';

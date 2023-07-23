@@ -7,8 +7,7 @@ import { ReactComponent as Spinner } from '../../../assets/Spinner.svg';
 import { auth } from '../../../firebase';
 
 const MyPlanCard = () => {
-  // const currentUser = auth.currentUser?.uid; 추후에 변경
-  const currentUser = 'mq2ucY1KZsdi2YmtikgUCyZw8dN2';
+  const currentUser = auth.currentUser?.uid;
   const { isLoading, data } = useQuery('detailData', () => fetchPlans(currentUser));
   const [isOpenPlanViewModal, setIsOpenPlanViewModal] = useState(false);
   const [detailData, setDetailData] = useState([]);
