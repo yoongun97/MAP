@@ -70,6 +70,7 @@ export const PV = {
       .plan-content-box {
         border: rgba(255, 100, 0, 0.2) solid 1px;
         width: 85%;
+        overflow-y: scroll;
         .plan-card {
           display: flex;
           .plan-place-card {
