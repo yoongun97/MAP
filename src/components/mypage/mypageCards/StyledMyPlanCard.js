@@ -1,7 +1,8 @@
 import { styled } from 'styled-components';
 
-export const L = {
+export const MPC = {
   Wrap: styled.div`
+    ${({ $view }) => $view && 'filter: blur(5px);'};
     width: 80%;
     margin: 0 auto;
     display: grid;
@@ -9,7 +10,7 @@ export const L = {
     grid-gap: 40px 0;
     align-items: center;
     justify-content: center;
-    .card-container {
+    .plancard-container {
       width: 80%;
       aspect-ratio: 7/10;
       border-radius: 2px;
@@ -18,7 +19,6 @@ export const L = {
       margin: 15px auto;
       flex-direction: column;
       justify-content: space-between;
-      cursor: pointer;
       .img-div {
         overflow: hidden;
         width: 100%;
@@ -36,7 +36,7 @@ export const L = {
         height: 20%;
         display: flex;
         justify-content: space-between;
-        box-shadow: 0 4px 30px rgba(0, 100, 255, 0.2);
+        box-shadow: 0 4px 20px -5px rgba(255, 100, 0, 0.2);
         padding: 0 10px;
         span {
           display: flex;
@@ -49,23 +49,14 @@ export const L = {
             font-size: 0.8em;
           }
         }
-        .like-box {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          svg {
-            margin: 5px;
-            transition: transform 0.3s ease;
-            &:hover {
-              transform: scale(1.1);
-            }
-          }
-          p {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.8em;
-          }
+        button {
+          width: 40%;
+          background-color: transparent;
+          border: 1px solid rgba(255, 100, 0, 0.2);
+          border-radius: 5px;
+          margin: 5% 0;
+          font-size: 100%;
+          cursor: pointer;
         }
       }
     }

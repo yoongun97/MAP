@@ -6,16 +6,22 @@ import { ReactComponent as Spinner } from '../../assets/Spinner.svg';
 import useInfiniteScoll from '../../hooks/useInfiniteScroll';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsMarkedMarked } from '../../redux/modules/kakao';
-import { fecthTourPlaces, fecthTourPlacesBasedAreaCode, setPlace } from '../../redux/modules/tourPlaces';
-
+import {
+  fecthTourPlaces,
+  fecthTourPlacesBasedAreaCode,
+  setDisplayPlace,
+  setPlace
+} from '../../redux/modules/tourPlaces';
+import { auth } from '../../firebase';
+import { addTourPlace, initTourPlaceData } from '../../redux/modules/plan';
+import { onAuthStateChanged } from 'firebase/auth';
 function List({ place, isShowPlanAdd }) {
   const ref = useRef(null);
   const dispatch = useDispatch();
-  const [selectedPlaces, setSelectedPlaces] = useState([]);
-
+  const currentUser = auth.currentUser?.uid ?? '';
   const { tourPlaces, loading, nothing } = useSelector((state) => state.tourPlacesReducer);
+  const { selectedTime, plan } = useSelector((state) => state.planReducer);
   const { kakao, kakaoLoading, isMarked, isMarkedMarked } = useSelector((state) => state.kakaoReducer);
-
   const [page, setPage] = useState(1);
 
   const markMap = () => {
@@ -39,6 +45,7 @@ function List({ place, isShowPlanAdd }) {
   const [observe, unobserve] = useInfiniteScoll(increasePage);
 
   useEffect(() => {
+    dispatch(initTourPlaceData({ placeId: place.placeId, userId: currentUser }));
     unobserve(ref.current);
     markMap();
   }, [kakao]);
@@ -82,7 +89,8 @@ function List({ place, isShowPlanAdd }) {
 
   // + 버튼 클릭 이벤트
   const handleAddToPlan = (selectedPlace) => {
-    setSelectedPlaces([...selectedPlaces, selectedPlace]);
+    dispatch(setDisplayPlace(selectedPlace.contentid));
+    dispatch(addTourPlace({ when: selectedTime, selectedPlace }));
   };
 
   return (
@@ -91,9 +99,9 @@ function List({ place, isShowPlanAdd }) {
         <p>추천장소</p>
       </div>
       <S.spotList>
-        {tourPlaces.length > 1
+        {tourPlaces.length > 0
           ? tourPlaces.map((item) => {
-              return (
+              return item.visible ? (
                 <S.spotCard
                   key={item.contentid}
                   onClick={() => onClickSpotCreateMarker(item.mapy, item.mapx, item.title)}
@@ -115,6 +123,8 @@ function List({ place, isShowPlanAdd }) {
                     </button>
                   )}
                 </S.spotCard>
+              ) : (
+                <></>
               );
             })
           : nothing && <>없습니다</>}

@@ -160,11 +160,11 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   };
 
   // KaKao 로그인
-  useEffect(() => {
-    if (!window.Kakao.isInitialized()) {
-      window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!window.Kakao.isInitialized()) {
+  //     window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+  //   }
+  // }, []);
 
   const LogInByKaKao = () => {
     const redirectUri = `http://localhost:3000/callback/kakaotalk`;
