@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MPC } from './StyledMyPlanCard';
 import PlanView from '../modal/PlanView';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deletePlan, fetchPlans } from '../../../api/plans';
 import { ReactComponent as Spinner } from '../../../assets/Spinner.svg';
 import { auth } from '../../../firebase';
@@ -9,9 +9,13 @@ import planImg from '../../../assets/plan.png';
 
 const MyPlanCard = () => {
   const currentUser = auth.currentUser?.uid;
-
+  const queryClient = useQueryClient();
   const { isLoading, data } = useQuery('detailData', () => fetchPlans(currentUser));
-  console.log(data);
+  const deletePlanMutation = useMutation(deletePlan, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('detailData');
+    }
+  });
   const [isOpenPlanViewModal, setIsOpenPlanViewModal] = useState(false);
   const [detailData, setDetailData] = useState([]);
   const createDetailData = (filteringIdx) => {
@@ -23,6 +27,9 @@ const MyPlanCard = () => {
   });
   const handleModal = () => {
     setIsOpenPlanViewModal(!isOpenPlanViewModal);
+  };
+  const handlePlanDeleteBtn = async (planId) => {
+    deletePlanMutation.mutate(planId);
   };
   return (
     <>
@@ -71,7 +78,7 @@ const MyPlanCard = () => {
                     <button
                       className="plan-delete-btn"
                       onClick={() => {
-                        deletePlan(plan.planId);
+                        handlePlanDeleteBtn(plan.planId);
                       }}
                     >
                       x
