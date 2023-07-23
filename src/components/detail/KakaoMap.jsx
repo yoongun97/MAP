@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './StyledDetail';
 
-function KakaoMap() {
+function KakaoMap(isShowPlanAdd) {
   return <S.detailKakaoMap id="map"></S.detailKakaoMap>;
 }
 
