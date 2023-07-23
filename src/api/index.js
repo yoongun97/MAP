@@ -9,7 +9,6 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     const { url, method, params, data } = config;
-    console.log(`[요청데이터]: ${JSON.stringify({ url, params, method, data }, null, 2)}`);
     return config;
   },
   (error) => {

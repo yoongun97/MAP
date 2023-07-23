@@ -1,16 +1,16 @@
 import React from 'react';
 import { useEffect } from 'react';
-import { auth } from '../../firebase';
+import { auth } from '../../../firebase';
 import { onAuthStateChanged } from '@firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { L } from './StyledLikedCard';
 import { useMutation, useQueryClient } from 'react-query';
-import { handleLike } from '../../api/likes';
+import { handleLike } from '../../../api/likes';
 import { useSelector } from 'react-redux';
 
 function LikedCard() {
   const currentUser = auth.currentUser?.uid ?? '';
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const likeMutation = useMutation(handleLike, {
     onSuccess: () => {
@@ -30,7 +30,7 @@ function LikedCard() {
         {likedPlaces.map((place) => {
           return (
             <div
-              key={place.placeId}
+              key={place.id}
               className="card-container"
               onClick={() => {
                 navigate(`/${place.id}`);
