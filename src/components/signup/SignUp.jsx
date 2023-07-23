@@ -147,7 +147,6 @@ function SignUp({ openModal, closeModal, isSignUpOpen, SignUpModalRef }) {
       }
     } catch (error) {
       alert('닉네임 확인에 실패했습니다!');
-      console.log('닉네임 확인 실패', error);
     }
   };
 

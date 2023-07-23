@@ -14,14 +14,18 @@ import {
 } from '../../redux/modules/tourPlaces';
 import { auth } from '../../firebase';
 import { addTourPlace, initTourPlaceData } from '../../redux/modules/plan';
-import { onAuthStateChanged } from 'firebase/auth';
+
 function List({ place, isShowPlanAdd }) {
   const ref = useRef(null);
   const dispatch = useDispatch();
   const currentUser = auth.currentUser?.uid ?? '';
   const { tourPlaces, loading, nothing } = useSelector((state) => state.tourPlacesReducer);
-  const { selectedTime, plan } = useSelector((state) => state.planReducer);
-  const { kakao, kakaoLoading, isMarked, isMarkedMarked } = useSelector((state) => state.kakaoReducer);
+
+  // 여행 계획 데이터가 필요하다면 plan을 구조분해할당하여 받아오면 된다.
+  const { selectedTime } = useSelector((state) => state.planReducer);
+
+  // loading 여부 확인이 필요하다면 kakaoLoading을 구조분해할당하여 받아오면 된다.
+  const { kakao, isMarked, isMarkedMarked } = useSelector((state) => state.kakaoReducer);
   const [page, setPage] = useState(1);
 
   const markMap = () => {
@@ -40,7 +44,7 @@ function List({ place, isShowPlanAdd }) {
     setPage((prev) => {
       return prev + 1;
     });
-  });
+  }, []);
 
   const [observe, unobserve] = useInfiniteScoll(increasePage);
 
