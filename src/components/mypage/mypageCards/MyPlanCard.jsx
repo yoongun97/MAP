@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { MPC } from './StyledMyPlanCard';
 import PlanView from '../modal/PlanView';
 import { useQuery } from 'react-query';
-import { fetchPlans } from '../../../api/plans';
+import { deletePlan, fetchPlans } from '../../../api/plans';
 import { ReactComponent as Spinner } from '../../../assets/Spinner.svg';
 import { auth } from '../../../firebase';
 
 const MyPlanCard = () => {
   const currentUser = auth.currentUser?.uid;
-  // const currentUser = 'mq2ucY1KZsdi2YmtikgUCyZw8dN2';
 
   const { isLoading, data } = useQuery('detailData', () => fetchPlans(currentUser));
+  console.log(data);
   const [isOpenPlanViewModal, setIsOpenPlanViewModal] = useState(false);
   const [detailData, setDetailData] = useState([]);
   const createDetailData = (filteringIdx) => {
@@ -39,9 +39,10 @@ const MyPlanCard = () => {
                   <div className="info-box">
                     <span>
                       {plan.title}
-                      <p>{`작성일: 월 일`}</p>
+                      <p>{`${plan.createdAt}`}</p>
                     </span>
                     <button
+                      className="view-plan-btn"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleModal();
@@ -49,6 +50,14 @@ const MyPlanCard = () => {
                       }}
                     >
                       Click!
+                    </button>
+                    <button
+                      className="plan-delete-btn"
+                      onClick={() => {
+                        deletePlan(plan.planId);
+                      }}
+                    >
+                      x
                     </button>
                   </div>
                 </div>
