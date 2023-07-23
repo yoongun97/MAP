@@ -25,7 +25,7 @@ import {
   StSNSTitle,
   StModalBtns
 } from './StyledLogIn';
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   const [email, setEmail] = useState('');
@@ -51,7 +51,7 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
   const signIn = async (event) => {
     event.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
 
       closeLogInModal();
     } catch (error) {
