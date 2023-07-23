@@ -1,4 +1,4 @@
-import { collection, getDocs, where, query, addDoc } from 'firebase/firestore';
+import { collection, getDocs, where, query, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 /**
  *
@@ -6,7 +6,7 @@ import { db } from '../firebase';
  */
 export const savePlan = async (data) => {
   try {
-    await addDoc(collection(db, 'Plans'), data);
+    await addDoc(collection(db, 'plans'), data);
     return { success: true, message: '작성했습니다.' };
   } catch (e) {
     return { success: false, message: 'db오류가 발생' };
@@ -14,17 +14,18 @@ export const savePlan = async (data) => {
 };
 export const deletePlan = async (planId) => {
   try {
-    console.log(planId);
-
-    const res = await db.collection('Plans').doc(planId).delete();
-    console.log(res);
+    const check = window.confirm('정말 삭제하시겠습니까?');
+    if (check) {
+      await deleteDoc(doc(db, 'plans', planId));
+      alert('삭제되었습니다!');
+    }
   } catch (e) {
     return { success: false, message: 'db오류가 발생' };
   }
 };
 export const fetchPlans = async (userId) => {
   try {
-    const q = query(collection(db, 'Plans'), where('userId', '==', userId));
+    const q = query(collection(db, 'plans'), where('userId', '==', userId));
     const qSnap = await getDocs(q);
     let result = [];
     if (!qSnap.empty) {
