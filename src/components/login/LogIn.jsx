@@ -125,13 +125,13 @@ function LogIn({ openModal, closeModal, isLogInOpen, LogInModalRef }) {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        const { email, uid } = user;
+        const { email, uid, displayName } = user;
         const userDocRef = doc(db, 'users', uid); // 해당 유저의 문서 참조
         getDoc(userDocRef)
           .then((docSnapshot) => {
             if (!docSnapshot.exists()) {
               // 데이터가 없는 경우에만 초기값으로 설정
-              const nickname = email;
+              const nickname = displayName;
 
               setDoc(
                 userDocRef,
