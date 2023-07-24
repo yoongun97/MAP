@@ -2,6 +2,15 @@
 
 > **Create React App Project** <br/> **개발기간: 2023.07.17 ~ 2023.07.24**
 
+##사용 기술
+- react<img src=https://github.com/abcd0978/MAP/assets/48148112/09dec542-2cad-474d-a33d-d3d3730cb4d0  width="20" height="20"/>
+- redux-thunk<img src=https://github.com/abcd0978/MAP/assets/48148112/09dec542-2cad-474d-a33d-d3d3730cb4d0  width="20" height="20"/>
+- react-query<img src=https://github.com/abcd0978/MAP/assets/48148112/f4fd06c0-bed3-4802-98d8-010c3b453abb width="20" height="20"/>
+- axios<img src=https://github.com/abcd0978/MAP/assets/48148112/df44fc04-cd0f-4990-b1cd-2740d091a031  width="20" height="20"/>
+- kakao map API<img src=https://github.com/abcd0978/MAP/assets/48148112/0505f311-d2ed-4e10-8d3b-f1b0b6a975de  width="20" height="20"/>  
+##사용 API
+- 한국관광공사_국문 관광정보 서비스_GW
+- 
 ## 프로젝트 소개
 
 - 사용자가 선택한 지역의 관광 명소, 레스토랑, 숙소 등의 정보를 제공하고, 선택한 장소의 동영상을 관광지 정보와 함께 보여줍니다.
