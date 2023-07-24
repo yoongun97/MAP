@@ -13,8 +13,7 @@ import { useQuery } from 'react-query';
 const Detail = () => {
   const planBoxRef = useRef(null);
   const { placeId } = useParams();
-  console.log(placeId);
-  const { data: place, isLoading, isError } = useQuery(['place', placeId], () => getDetailPlaceData(placeId));
+  const { data: place } = useQuery(['place', placeId], () => getDetailPlaceData(placeId));
 
   const [isShow, setIsShow] = useState(false);
 

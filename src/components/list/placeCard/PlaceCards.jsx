@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import { auth } from '../../../firebase';
 
 const PlaceCards = () => {
-  const { searchKeyword, places: data } = useSelector((state) => state);
+  const searchKeyword = useSelector((state) => state.searchKeyword);
+  const data = useSelector((state) => state.places);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const likeMutation = useMutation(handleLike, {
