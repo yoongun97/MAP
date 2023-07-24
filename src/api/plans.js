@@ -9,7 +9,6 @@ export const savePlan = async (data) => {
     await addDoc(collection(db, 'plans'), data);
 
     return { success: true, message: '여행 계획 작성!!' };
-
   } catch (e) {
     return { success: false, message: 'savePlan > ', e };
   }

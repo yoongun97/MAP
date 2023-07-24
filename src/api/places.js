@@ -30,6 +30,7 @@ const getDetailPlaceData = async (id) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return {
+        placeId: id,
         ...docSnap.data()
       };
     }

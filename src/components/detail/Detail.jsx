@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import * as S from './StyledDetail';
 import KakaoMap from './KakaoMap';
 import { onLoadKakaoMap } from '../../api/kakao';
@@ -8,21 +8,15 @@ import { useParams } from 'react-router-dom';
 import PlanAdd from '../planner/PlanAdd';
 import { auth } from '../../firebase';
 import useDebounce from '../../hooks/useDebounce';
+import { useQuery } from 'react-query';
 
 const Detail = () => {
   const planBoxRef = useRef(null);
-
   const { placeId } = useParams();
-  const [place, setPlace] = useState();
-  const [isShow, setIsShow] = useState(false);
+  console.log(placeId);
+  const { data: place, isLoading, isError } = useQuery(['place', placeId], () => getDetailPlaceData(placeId));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getDetailPlaceData(placeId);
-      setPlace({ ...data, placeId });
-    };
-    fetchData();
-  }, []);
+  const [isShow, setIsShow] = useState(false);
 
   // script를 만들어 kakao api를 받아온다.
   const mapScript = document.createElement('script');
