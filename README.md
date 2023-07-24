@@ -95,7 +95,7 @@
 좋아요 조회 | /api/likes | GET | { <br> placeId:string, <br> userId:string <br> } | { <br> placeLikes: [ <br>  user1, user2, …] <br> }
 좋아요 추가 | /api/likes | POST | { <br> placeId:string, <br> userId:string <br> } | -
 좋아요 삭제 | /api/likes | DELETE | { <br> placeId:string, <br> userId:string <br> } | -
-여행계획 리스트 조회 | /api/plans | GET | { <br> userId:string <br> } | { <br> userId, <br> placeId, <br> title, <br> createdAt, <br> day1: [], <br> day2: [], <br> day3: [], <br> day4: [], <br> day5: [] <br>  }
-여행계획 단일 조회 | /api/plans/:planId | GET | { <br> placeId:string, <br> userId:string <br> } | -
-여행계획 추가 | /api/plans | POST | { <br> placeId:string, <br> userId:string <br> } | -
-여행계획 삭제 | /api/plans/:planId | DELETE | { <br> placeId:string, <br> userId:string <br> } | -
+여행계획 리스트 조회 | /api/plans | GET | { <br> userId:string <br> } | response= <br> { <br> plan1:{}, <br>  plan2:{}, ... <br> },
+여행계획 단일 조회 | /api/plans/:planId | GET | { <br> placeId:string, <br> userId:string <br> } | { <br> userId, <br> placeId, <br> title, <br> createdAt, <br> day1: [], <br> day2: [], <br> day3: [], <br> day4: [], <br> day5: [] <br>  }
+여행계획 추가 | /api/plans | POST | { <br> userId, <br> placeId, <br> title, <br> createdAt, <br> day1: [], <br> day2: [], <br> day3: [], <br> day4: [], <br> day5: [] <br>  } | msg : '여행계획을 작성하였습니다.'
+여행계획 삭제 | /api/plans/:planId | DELETE | { <br> planId <br> } | msg : '삭제되었습니다!'
