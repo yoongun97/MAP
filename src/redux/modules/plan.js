@@ -30,7 +30,7 @@ export const writePlan = createAsyncThunk(`${name}/writePlan`, async (data, thun
 });
 
 const initialState = {
-  plan: { userId: null, placeId: null, title: null, createdAt: null, day1: [], day2: [], day3: [], day4: [], day5: [] },
+  plan: { userId: null, placeId: null, title: '', createdAt: null, day1: [], day2: [], day3: [], day4: [], day5: [] },
   selectedTime: 1,
   loading: false,
   message: null,
