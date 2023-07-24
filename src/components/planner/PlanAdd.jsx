@@ -45,15 +45,16 @@ function PlanAdd(plans) {
     if (!plan.title) {
       // 여행 제목이 비어있을 경우
       alert('여행 제목을 입력해주세요.');
-
       return;
     }
+
+    const dispatchWritePlan = await dispatch(writePlan(plan));
+    if (dispatchWritePlan.payload.error?.message) return;
 
     plans.handlePlanBox();
     setPlanText('');
     setSelectedTimeBtn(1);
     dispatch(setPlanTitle(''));
-    dispatch(writePlan(plan));
   };
 
   const handleDeletePlan = (e, day, index, contentid) => {
