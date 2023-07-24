@@ -3,6 +3,7 @@ import { LSB } from './StyledListSearchingBox';
 import { useDispatch } from 'react-redux';
 import { sortPlaces } from '../../../redux/modules/places';
 import { setSearchKeyword } from '../../../redux/modules/searchKeyword';
+import useDebounce from '../../../hooks/useDebounce';
 
 const ListSearchingBox = () => {
   const inputRef = useRef(null);
@@ -26,8 +27,9 @@ const ListSearchingBox = () => {
     setSearchValue(e.target.value);
   };
   // 검색어가 변경될 때마다 필터링된 데이터 업데이트
+  const debounceSetSearchKeyword = useDebounce(() => dispatch(setSearchKeyword(searchValue)), 400);
   useEffect(() => {
-    dispatch(setSearchKeyword(searchValue));
+    debounceSetSearchKeyword();
   }, [searchValue]);
   return (
     <LSB.SearchContainer $view={isShow.toString()}>
