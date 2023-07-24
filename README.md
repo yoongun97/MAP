@@ -98,4 +98,4 @@
 여행계획 리스트 조회 | /api/plans | GET | { <br> userId:string <br> } | { <br> userId, <br> placeId, <br> title, <br> createdAt, <br> day1: [], <br> day2: [], <br> day3: [], <br> day4: [], <br> day5: [] <br>  }
 여행계획 단일 조회 | /api/plans/:planId | GET | { <br> placeId:string, <br> userId:string <br> } | -
 여행계획 추가 | /api/plans | POST | { <br> placeId:string, <br> userId:string <br> } | -
-여행계획 삭제 | /api/plans | DELETE | { <br> placeId:string, <br> userId:string <br> } | -
+여행계획 삭제 | /api/plans/:planId | DELETE | { <br> placeId:string, <br> userId:string <br> } | -
