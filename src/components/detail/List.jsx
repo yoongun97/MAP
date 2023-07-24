@@ -107,7 +107,7 @@ function List({ place, isShowPlanAdd }) {
           ? tourPlaces.map((item) => {
               return item.visible ? (
                 <S.spotCard
-                  key={item.contentid}
+                  key={item?.contentid}
                   onClick={() => onClickSpotCreateMarker(item.mapy, item.mapx, item.title)}
                 >
                   <S.spotImage>
@@ -128,7 +128,7 @@ function List({ place, isShowPlanAdd }) {
                   )}
                 </S.spotCard>
               ) : (
-                <></>
+                <div key={item.contentid}></div>
               );
             })
           : nothing && <>없습니다</>}

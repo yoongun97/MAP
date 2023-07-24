@@ -48,11 +48,11 @@ function PlanAdd(plans) {
 
       return;
     }
-    console.log('여행 제목');
 
     plans.handlePlanBox();
     setPlanText('');
     setSelectedTimeBtn(1);
+    dispatch(setPlanTitle(''));
     dispatch(writePlan(plan));
   };
 
@@ -66,6 +66,7 @@ function PlanAdd(plans) {
       <P.planHeader>
         <P.planTitle
           placeholder="여행 제목(테마)을 입력해주세요."
+          value={plan.title}
           onChange={(e) => {
             handlePlanTitleChange(e);
           }}
