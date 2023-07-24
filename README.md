@@ -90,12 +90,12 @@
 로그인 |/api/users/login | POST | {<br> userId: string, <br> userPassword: string <br>  } | { <br> userId, <br> userPassword, <br> nickname}
 회원가입 |/api/users/signUp | POST | {<br> userId: string, <br> userPassword: string,  <br> nickname: string <br> } | -
 마이페이지(좋아요 한 목록) | /api/likes/:userId | GET | likes: {<br> userId: string  <br> }, <br>  place: { <br> placeId <br> } | likes: { <br> placeId, <br> userId <br> }, <br> place: { <br> placeName, <br> placeImg, <br> desc <br> }
-지역 리스트 조회 | /api/places | GET | - | { <br> placeName, <br> placeImg,desc <br> }
+지역 리스트 조회 | /api/places | GET | - | { <br> placeName, <br> placeImg, <br> desc <br> }
 지역 단일 조회 | /api/places/:placeId | GET | { <br> placeId:strging <br> } | { <br> placeName, <br>placeImg, <br> desc <br> }
 좋아요 조회 | /api/likes | GET | { <br> placeId:string, <br> userId:string <br> } | { <br> placeLikes: [ <br>  user1, user2, …] <br> }
 좋아요 추가 | /api/likes | POST | { <br> placeId:string, <br> userId:string <br> } | -
 좋아요 삭제 | /api/likes | DELETE | { <br> placeId:string, <br> userId:string <br> } | -
-여행계획 리스트 조회 | /api/plans | GET | { <br> placeId:string, <br> userId:string <br> } | { <br> placeLikes: [user1, user2, …] <br> }
+여행계획 리스트 조회 | /api/plans | GET | { <br> userId:string <br> } | { <br> userId, <br> placeId, <br> title, <br> createdAt, <br> day1: [], <br> day2: [], <br> day3: [], <br> day4: [], <br> day5: [] <br>  }
 여행계획 단일 조회 | /api/plans/:planId | GET | { <br> placeId:string, <br> userId:string <br> } | -
 여행계획 추가 | /api/plans | POST | { <br> placeId:string, <br> userId:string <br> } | -
 여행계획 삭제 | /api/plans | DELETE | { <br> placeId:string, <br> userId:string <br> } | -
